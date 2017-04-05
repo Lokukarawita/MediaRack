@@ -6,7 +6,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public class MovieFiles
     {

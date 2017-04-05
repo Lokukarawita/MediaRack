@@ -1,4 +1,4 @@
-﻿namespace mv_collect_db
+﻿namespace MediaRack
 {
     partial class Form1
     {
@@ -70,7 +70,7 @@
             // 
             // btn_pic_srch
             // 
-            this.btn_pic_srch.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.btn_pic_srch.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.btn_pic_srch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_pic_srch.Image = ((System.Drawing.Image)(resources.GetObject("btn_pic_srch.Image")));
             this.btn_pic_srch.Location = new System.Drawing.Point(375, 47);
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.ClientSize = new System.Drawing.Size(489, 373);
             this.Controls.Add(this.btn_pic_srch);
             this.Controls.Add(this.listbx_search);

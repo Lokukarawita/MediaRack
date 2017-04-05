@@ -10,7 +10,7 @@ using WatTmdb.V3;
 using System.Data.OleDb;
 using System.Net;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public partial class Form2 : Form
     {

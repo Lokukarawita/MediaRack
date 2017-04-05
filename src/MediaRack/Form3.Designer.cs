@@ -1,4 +1,4 @@
-﻿namespace mv_collect_db
+﻿namespace MediaRack
 {
     partial class Form3
     {
@@ -51,7 +51,7 @@
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.lbl_mvname = new mv_collect_db.TitleLable();
+            this.lbl_mvname = new MediaRack.TitleLable();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_delete)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_refresh)).BeginInit();
@@ -196,10 +196,10 @@
             // btn_pic_delete
             // 
             this.btn_pic_delete.BackColor = System.Drawing.Color.Transparent;
-            this.btn_pic_delete.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.btn_pic_delete.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.btn_pic_delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn_pic_delete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_delete.Image = global::mv_collect_db.Properties.Resources.btn_dele;
+            this.btn_pic_delete.Image = global::MediaRack.Properties.Resources.btn_dele;
             this.btn_pic_delete.Location = new System.Drawing.Point(595, 570);
             this.btn_pic_delete.Name = "btn_pic_delete";
             this.btn_pic_delete.Size = new System.Drawing.Size(90, 26);
@@ -210,10 +210,10 @@
             // btn_pic_refresh
             // 
             this.btn_pic_refresh.BackColor = System.Drawing.Color.Transparent;
-            this.btn_pic_refresh.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.btn_pic_refresh.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.btn_pic_refresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn_pic_refresh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_refresh.Image = global::mv_collect_db.Properties.Resources.btn_refresh;
+            this.btn_pic_refresh.Image = global::MediaRack.Properties.Resources.btn_refresh;
             this.btn_pic_refresh.Location = new System.Drawing.Point(697, 570);
             this.btn_pic_refresh.Name = "btn_pic_refresh";
             this.btn_pic_refresh.Size = new System.Drawing.Size(90, 26);
@@ -224,10 +224,10 @@
             // btn_pic_add
             // 
             this.btn_pic_add.BackColor = System.Drawing.Color.Transparent;
-            this.btn_pic_add.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.btn_pic_add.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.btn_pic_add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn_pic_add.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_add.Image = global::mv_collect_db.Properties.Resources.btn_add;
+            this.btn_pic_add.Image = global::MediaRack.Properties.Resources.btn_add;
             this.btn_pic_add.Location = new System.Drawing.Point(808, 570);
             this.btn_pic_add.Name = "btn_pic_add";
             this.btn_pic_add.Size = new System.Drawing.Size(73, 26);
@@ -238,10 +238,10 @@
             // btn_pic_exit
             // 
             this.btn_pic_exit.BackColor = System.Drawing.Color.Transparent;
-            this.btn_pic_exit.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.btn_pic_exit.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.btn_pic_exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btn_pic_exit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_exit.Image = global::mv_collect_db.Properties.Resources.btn_exit;
+            this.btn_pic_exit.Image = global::MediaRack.Properties.Resources.btn_exit;
             this.btn_pic_exit.Location = new System.Drawing.Point(901, 570);
             this.btn_pic_exit.Name = "btn_pic_exit";
             this.btn_pic_exit.Size = new System.Drawing.Size(68, 26);
@@ -263,7 +263,7 @@
             // back_pic
             // 
             this.back_pic.BackColor = System.Drawing.Color.Transparent;
-            this.back_pic.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.back_pic.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.back_pic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.back_pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.back_pic.Location = new System.Drawing.Point(24, 75);
@@ -289,7 +289,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.pictureBox2.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(57, 570);
             this.pictureBox2.Name = "pictureBox2";
@@ -303,7 +303,7 @@
             this.lbl_mvname.BackColor = System.Drawing.Color.Transparent;
             this.lbl_mvname.Font = new System.Drawing.Font("Segoe UI Light", 27.75F);
             this.lbl_mvname.ForeColor = System.Drawing.Color.White;
-            this.lbl_mvname.Image = global::mv_collect_db.Properties.Resources.bk_img;
+            this.lbl_mvname.Image = global::MediaRack.Properties.Resources.bk_img;
             this.lbl_mvname.Location = new System.Drawing.Point(48, 89);
             this.lbl_mvname.Name = "lbl_mvname";
             this.lbl_mvname.Size = new System.Drawing.Size(208, 50);

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using WatTmdb.V3;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public partial class Form3 : Form
     {

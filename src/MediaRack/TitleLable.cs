@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public class TitleLable : Label
     {

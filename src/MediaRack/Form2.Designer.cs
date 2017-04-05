@@ -1,4 +1,4 @@
-﻿namespace mv_collect_db
+﻿namespace MediaRack
 {
     partial class Form2
     {
@@ -204,7 +204,7 @@
             // 
             this.btn_pic_exit.BackColor = System.Drawing.Color.Transparent;
             this.btn_pic_exit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_exit.Image = global::mv_collect_db.Properties.Resources.btn_exit;
+            this.btn_pic_exit.Image = global::MediaRack.Properties.Resources.btn_exit;
             this.btn_pic_exit.Location = new System.Drawing.Point(713, 360);
             this.btn_pic_exit.Name = "btn_pic_exit";
             this.btn_pic_exit.Size = new System.Drawing.Size(88, 32);
@@ -217,7 +217,7 @@
             // 
             this.btn_pic_save.BackColor = System.Drawing.Color.Transparent;
             this.btn_pic_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pic_save.Image = global::mv_collect_db.Properties.Resources.btn_save;
+            this.btn_pic_save.Image = global::MediaRack.Properties.Resources.btn_save;
             this.btn_pic_save.Location = new System.Drawing.Point(55, 360);
             this.btn_pic_save.Name = "btn_pic_save";
             this.btn_pic_save.Size = new System.Drawing.Size(88, 32);
@@ -269,7 +269,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.BackgroundImage = global::mv_collect_db.Properties.Resources.bk_img;
+            this.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(866, 433);
             this.Controls.Add(this.statusStrip1);

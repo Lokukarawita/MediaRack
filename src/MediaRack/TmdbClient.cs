@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Net;
 using System.IO;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public class TmdbClient
     {

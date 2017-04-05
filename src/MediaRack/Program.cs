@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     static class Program
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WatTmdb.V3;
 
-namespace mv_collect_db
+namespace MediaRack
 {
 
     public partial class Form1 : Form

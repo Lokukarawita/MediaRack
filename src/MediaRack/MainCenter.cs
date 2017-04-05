@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public class MainCenter : Panel
     {

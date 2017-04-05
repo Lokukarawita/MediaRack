@@ -7,7 +7,7 @@ using System.Net;
 using System.Drawing;
 using System.IO;
 
-namespace mv_collect_db
+namespace MediaRack
 {
     public delegate void FileDownloadProgress(int percent); //progress delegate
     public delegate void FilesDownloadComplete(Image poster, Image backdrop); //complete delegate
