@@ -22,5 +22,17 @@ namespace MediaRack.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500569e716c3a599be3b0b3f851092ad")]
+        public string APIKEY_TMDB {
+            get {
+                return ((string)(this["APIKEY_TMDB"]));
+            }
+            set {
+                this["APIKEY_TMDB"] = value;
+            }
+        }
     }
 }

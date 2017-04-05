@@ -9,10 +9,13 @@ using System.Windows.Forms;
 using WatTmdb.V3;
 using System.Data.OleDb;
 using System.Net;
+using MediaRack.Core.Net;
+using MediaRack.Core.Api.TMDDb;
+using MediaRack.Core.Data.Local;
 
 namespace MediaRack
 {
-    public partial class Form2 : Form
+    public partial class FrmAdd : Form
     {
         TmdbMovieImages imgs;
         TmdbMovie movie = null;
@@ -22,7 +25,7 @@ namespace MediaRack
 
         ImageDownloader imageDownloader;
 
-        public Form2(TmdbMovie movie)
+        public FrmAdd(TmdbMovie movie)
         {
             InitializeComponent();
             this.movie = movie; 

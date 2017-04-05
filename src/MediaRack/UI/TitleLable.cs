@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace MediaRack
+namespace MediaRack.UI
 {
     public class TitleLable : Label
     {

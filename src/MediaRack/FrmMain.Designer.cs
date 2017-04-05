@@ -1,6 +1,6 @@
 ﻿namespace MediaRack
 {
-    partial class Form3
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.listView1 = new System.Windows.Forms.ListView();
             this.movie_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.vote = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -51,7 +51,7 @@
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.lbl_mvname = new MediaRack.TitleLable();
+            this.lbl_mvname = new MediaRack.UI.TitleLable();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_delete)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_refresh)).BeginInit();
@@ -368,7 +368,7 @@
         private System.Windows.Forms.PictureBox btn_pic_refresh;
         private System.Windows.Forms.PictureBox btn_pic_delete;
         private System.Windows.Forms.PictureBox back_pic;
-        private TitleLable lbl_mvname;
+        private MediaRack.UI.TitleLable lbl_mvname;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.ColumnHeader dvd_no;

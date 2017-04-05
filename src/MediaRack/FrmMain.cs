@@ -8,17 +8,18 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using WatTmdb.V3;
+using MediaRack.Core.Data.Local;
 
 namespace MediaRack
 {
-    public partial class Form3 : Form
+    public partial class FrmMain : Form
     {
         delegate void SetPlotTextCallback(string text);   
         DataSet ds;
         string mv_id;
         int a=0,b=0,c=0;
        
-        public Form3()
+        public FrmMain()
         {
             InitializeComponent();
 
@@ -42,7 +43,7 @@ namespace MediaRack
         private void btn_pic_add_Click(object sender, EventArgs e)
         {
             DialogResult rslt;
-            Form1 frm1 = new Form1();
+            FrmSearch frm1 = new FrmSearch();
             rslt = frm1.ShowDialog(this);
 
             TmdbMovie selectedmv = null;
@@ -51,7 +52,7 @@ namespace MediaRack
                 selectedmv = frm1.SelectedMovie;
                 frm1.Dispose();
 
-                Form2 vieMv = new Form2(selectedmv);
+                FrmAdd vieMv = new FrmAdd(selectedmv);
                 rslt = vieMv.ShowDialog(this);
                 if (rslt == System.Windows.Forms.DialogResult.OK)
                 {

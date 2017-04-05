@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Net;
 using System.IO;
 
-namespace MediaRack
+namespace MediaRack.Core.Api.TMDDb
 {
     public class TmdbClient
     {
@@ -16,7 +16,7 @@ namespace MediaRack
 
         static TmdbClient()
         {
-            tmdb = new Tmdb("500569e716c3a599be3b0b3f851092ad");
+            tmdb = new Tmdb(Properties.Settings.Default.APIKEY_TMDB);
             config = tmdb.GetConfiguration();
         }
 

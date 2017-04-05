@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace MediaRack
+namespace MediaRack.Core.Data.Local
 {
     public class DBConnection
     {

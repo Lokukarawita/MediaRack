@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace MediaRack
+namespace MediaRack.UI
 {
     public class MainCenter : Panel
     {

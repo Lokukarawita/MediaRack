@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaRack.Core.Api.TMDDb;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,10 +12,10 @@ using WatTmdb.V3;
 namespace MediaRack
 {
 
-    public partial class Form1 : Form
+    public partial class FrmSearch : Form
     {
   
-        public Form1()
+        public FrmSearch()
         {
             InitializeComponent();
 
