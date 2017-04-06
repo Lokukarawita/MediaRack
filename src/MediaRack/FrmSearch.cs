@@ -71,6 +71,18 @@ namespace MediaRack
 
                 listbx_search.DataSource = search.results;
                 listbx_search.DisplayMember = "title";
+
+                foreach (var item in search.results)
+                {
+                    var url = TmdbClient.GetImageUri(item.poster_path, "original");
+                    searchResults1.AddItem(item.original_title, item.release_date, item.vote_average.ToString(), url.ToString());
+                    //UI.SearchResultItem ri = new UI.SearchResultItem();
+                    //ri.Title = item.title;
+                    //ri.Year = item.release_date;
+                    //ri.Rating = item.vote_average.ToString();
+                    //this.Controls.Add(ri);
+                    //ri.SetImage(url.ToString());
+                }
             }
         }
 

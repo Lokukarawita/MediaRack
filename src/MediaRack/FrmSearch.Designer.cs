@@ -33,6 +33,7 @@
             this.txt_search = new System.Windows.Forms.TextBox();
             this.listbx_search = new System.Windows.Forms.ListBox();
             this.btn_pic_srch = new System.Windows.Forms.PictureBox();
+            this.searchResults1 = new MediaRack.UI.SearchResults();
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_srch)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +64,7 @@
             this.listbx_search.ItemHeight = 15;
             this.listbx_search.Location = new System.Drawing.Point(13, 99);
             this.listbx_search.Name = "listbx_search";
-            this.listbx_search.Size = new System.Drawing.Size(464, 244);
+            this.listbx_search.Size = new System.Drawing.Size(464, 64);
             this.listbx_search.TabIndex = 3;
             this.listbx_search.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listbx_search_MouseClick);
             this.listbx_search.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listbx_search_MouseDoubleClick);
@@ -81,19 +82,28 @@
             this.btn_pic_srch.TabStop = false;
             this.btn_pic_srch.Click += new System.EventHandler(this.btn_pic_srch_Click);
             // 
-            // Form1
+            // searchResults1
+            // 
+            this.searchResults1.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
+            this.searchResults1.Location = new System.Drawing.Point(13, 169);
+            this.searchResults1.Name = "searchResults1";
+            this.searchResults1.Size = new System.Drawing.Size(464, 293);
+            this.searchResults1.TabIndex = 5;
+            // 
+            // FrmSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MediaRack.Properties.Resources.bk_img;
-            this.ClientSize = new System.Drawing.Size(489, 373);
+            this.ClientSize = new System.Drawing.Size(489, 474);
+            this.Controls.Add(this.searchResults1);
             this.Controls.Add(this.btn_pic_srch);
             this.Controls.Add(this.listbx_search);
             this.Controls.Add(this.txt_search);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "FrmSearch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Moviez - Search";
             ((System.ComponentModel.ISupportInitialize)(this.btn_pic_srch)).EndInit();
@@ -108,6 +118,7 @@
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.ListBox listbx_search;
         private System.Windows.Forms.PictureBox btn_pic_srch;
+        private UI.SearchResults searchResults1;
     }
 }
 

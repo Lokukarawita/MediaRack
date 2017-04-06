@@ -93,6 +93,18 @@
     <Compile Include="Core\Data\Local\MovieFiles.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\SearchResultItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SearchResultItem.Designer.cs">
+      <DependentUpon>SearchResultItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SearchResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SearchResults.Designer.cs">
+      <DependentUpon>SearchResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\TitleLable.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -119,6 +131,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\SearchResultItem.resx">
+      <DependentUpon>SearchResultItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchResults.resx">
+      <DependentUpon>SearchResults.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
