@@ -61,7 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Data\Common\BaseDTO.cs" />
+    <Compile Include="Core\Data\Common\ISyncedDTO.cs" />
+    <Compile Include="Core\Data\Common\LocalSyncStatus.cs" />
+    <Compile Include="Core\Data\Common\MediaEntryDTO.cs" />
     <Compile Include="Core\Data\Local\DBConnection.cs" />
+    <Compile Include="Core\Data\Remote\IRemoteStorage.cs" />
+    <Compile Include="Core\Util\Hash\HashUtil.cs" />
     <Compile Include="FrmSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,9 +158,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Data\Remote\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
