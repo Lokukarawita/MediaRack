@@ -10,8 +10,10 @@ namespace MediaRack.Core.Data.Common
     /// </summary>
     public interface ISyncedDTO
     {
+        string GetHash();
+
         LocalSyncStatus LocalStatus { get; set; }
 
-        string Hash { get; }
+        string Hash { get; set; }
     }
 }
