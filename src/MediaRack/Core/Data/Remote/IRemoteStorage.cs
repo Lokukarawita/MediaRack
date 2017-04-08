@@ -8,14 +8,12 @@ namespace MediaRack.Core.Data.Remote
 {
     public interface IRemoteStorage
     {
-        void Connect();
-
-        void Disconnect();
-
+        void Open();
+        void Close();
         void UpdateRemote(List<ISyncedDTO> localData);
-
         List<ISyncedDTO> GetRemote();
-
-        bool IsConnected { get; }
+        List<ISyncedDTO> GetRemote(DateTime lastSyc);
+        ISyncedDTO GetRemote(int mediaRackId);
+        bool CheckConnected();
     }
 }

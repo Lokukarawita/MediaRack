@@ -12,8 +12,8 @@ namespace MediaRack.Core.Data.Common
         [JsonProperty("title")]
         public string Title { get; set; }
 
-        [JsonProperty("year")]
-        public DateTime Year { get; set; }
+        [JsonProperty("released")]
+        public DateTime Released { get; set; }
 
         [JsonProperty("plot")]
         public string Plot { get; set; }
