@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{46E17C
 		Common\WatTmdb.pdb = Common\WatTmdb.pdb
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testings", "Testings\Testings.csproj", "{B918C1FB-8119-42F6-BABE-C68A29FF526B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,12 @@ Global
 		{7CB014EF-83F8-445C-8076-4FBFD0E3C99B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7CB014EF-83F8-445C-8076-4FBFD0E3C99B}.Release|x86.ActiveCfg = Release|x86
 		{7CB014EF-83F8-445C-8076-4FBFD0E3C99B}.Release|x86.Build.0 = Release|x86
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B918C1FB-8119-42F6-BABE-C68A29FF526B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

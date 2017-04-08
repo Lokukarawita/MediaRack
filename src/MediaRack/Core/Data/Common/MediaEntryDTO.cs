@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MediaRack.Core.Util.Hash;
+using MediaRack.Core.Util.Enums;
 
 namespace MediaRack.Core.Data.Common
 {
@@ -11,51 +11,39 @@ namespace MediaRack.Core.Data.Common
     {
         public MediaEntryDTO()
         {
-            this.MediaType = MediaType.Movie;
+            this.Classification = MediaClassification.Movie;
             this.LocalStatus = LocalSyncStatus.NEW;
-            this.Series = string.Empty;
-            this.Episode = string.Empty;
+            this.IDInfo = new IDMetaInfo();
+            this.CompositionInfo = new CompositionMetaInfo();
+            this.FileInfo = new FileMetaInfo();
         }
 
-        public int ID { get; set; }
+        #region MediaRack
+        public int MediaRackID { get; set; }
 
-        //Info Metadata
-        public int TmdbID { get; set; }
-        public int TvdbID { get; set; }
-        public string ImdbID { get; set; }
+        public MediaClassification Classification { get; set; } 
+        #endregion
 
-        //Movie/Tv Metadata
-        public string Title { get; set; }
-        public DateTime Year { get; set; }
-        public string Plot { get; set; }
-        public double Rating { get; set; }
-        public MediaType MediaType { get; set; }
-        public string Series { get; set; }
-        public string Episode { get; set; }
+        /// <summary>
+        /// ID information for other web sites
+        /// </summary>
+        public IDMetaInfo IDInfo { get; set; }
 
-        //Media/File Metadata
-        public MediaQuality QualityTags { get; set; }
-        public string FileName { get; set; }
-        public string AbsolutePath { get; set; }
-        public string RootRelativePath { get; set; }
-        public string Root { get; set; }
-        public string PcName { get; set; }
+        /// <summary>
+        /// Move or Tv series info
+        /// </summary>
+        public CompositionMetaInfo CompositionInfo { get; set; }
 
-        public virtual string Hash { get; set; }
+        /// <summary>
+        /// File and quality information
+        /// </summary>
+        public FileMetaInfo FileInfo { get; set; }
+
+        #region ISyncedDTO
+        public virtual DateTime Timestamp { get; set; }
+
         public virtual LocalSyncStatus LocalStatus { get; set; }
-        public string GetHash()
-        {
-            StringBuilder sb = new StringBuilder();
-            var props = GetType().GetProperties();
-            foreach (var pr in props)
-            {
-                if (pr.CanRead)
-                {
-                    sb.Append(pr.GetValue(this, null)).Append("|");
-                }
-            }
-            return sb.ToString().Hash();
 
-        }
+        #endregion
     }
 }
