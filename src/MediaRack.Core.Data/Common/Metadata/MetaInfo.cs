@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MediaRack.Core.Data.Common
+namespace MediaRack.Core.Data.Common.Metadata
 {
     /// <summary>
     /// Base class for all MedaInfo classes

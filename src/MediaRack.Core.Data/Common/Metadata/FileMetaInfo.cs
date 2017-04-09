@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace MediaRack.Core.Data.Common
+namespace MediaRack.Core.Data.Common.Metadata
 {
     public class FileMetaInfo : MetaInfo
     {
@@ -13,6 +13,9 @@ namespace MediaRack.Core.Data.Common
         {
             QualityTags = new HashSet<MediaQuality>();
         }
+
+        [JsonProperty("group")]
+        public string Group { get; set; }
 
         [JsonProperty("quality")]
         public HashSet<MediaQuality> QualityTags { get; set; }

@@ -8,7 +8,7 @@ namespace MediaRack.Core.Data.Common
     /// <summary>
     /// Interface to implement for a remote synced data object
     /// </summary>
-    public interface ISyncedDTO
+    public interface ISynchronizable
     {
 
         LocalSyncStatus LocalStatus { get; set; }

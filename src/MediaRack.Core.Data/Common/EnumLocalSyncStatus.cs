@@ -9,7 +9,7 @@ namespace MediaRack.Core.Data.Common
     /// Synchronization status for local data
     /// </summary>
     [Serializable]
-    public enum LocalSyncStatus
+    public enum LocalSyncStatus : int
     {
         /// <summary>
         /// Item is new and not present in remote data storage

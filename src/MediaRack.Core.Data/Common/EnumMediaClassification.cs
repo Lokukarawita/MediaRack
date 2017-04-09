@@ -8,7 +8,7 @@ namespace MediaRack.Core.Data.Common
     /// <summary>
     /// Type of media
     /// </summary>
-    public enum MediaClassification
+    public enum MediaClassification : int
     {
         /// <summary>
         /// Movie

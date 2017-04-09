@@ -6,7 +6,7 @@ using System.Text;
 namespace MediaRack.Core.Data.Common
 {
     [Serializable]
-    public abstract class BaseDTO
+    public abstract class BaseEntity
     {
        
     }

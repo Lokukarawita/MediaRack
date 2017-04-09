@@ -34,5 +34,15 @@ namespace MediaRack.Properties {
                 this["APIKEY_TMDB"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source=\"D:\\I files\\Apps\\Github\\MediaRack\\src\\Common\\MediaRack.db3\"")]
+        public string MediaRackConnectionString {
+            get {
+                return ((string)(this["MediaRackConnectionString"]));
+            }
+        }
     }
 }

@@ -11,16 +11,17 @@ namespace MediaRack.Core.Api.TMDDb
 {
     public class TmdbClient
     {
+        public static string API_KEY = string.Empty;
         private static Tmdb tmdb;
         private static TmdbConfiguration config;
 
         static TmdbClient()
         {
-            tmdb = new Tmdb(Properties.Settings.Default.APIKEY_TMDB);
+            tmdb = new Tmdb(API_KEY);
             config = tmdb.GetConfiguration();
         }
 
-        public static Uri GetImageUri(string filepath, string width) 
+        public static Uri GetImageUri(string filepath, string width)
         {
             return new Uri(config.images.base_url + width + filepath);
         }
@@ -30,11 +31,11 @@ namespace MediaRack.Core.Api.TMDDb
             Uri u = GetImageUri(filepath, "original");
             return DownloadImage(u);
         }
-        public static Image DownloadImage(string filepath, int width) 
+        public static Image DownloadImage(string filepath, int width)
         {
             Uri u = GetImageUri(filepath, ("w" + width.ToString()));
             Image i = null;
-            
+
             try
             {
                 i = DownloadImage(u);
@@ -56,16 +57,16 @@ namespace MediaRack.Core.Api.TMDDb
 
             return DownloadImage(u);
         }
-        public static Image DownloadImage(Uri uri) 
+        public static Image DownloadImage(Uri uri)
         {
             WebClient c = new WebClient();
             byte[] data = c.DownloadData(uri);
             return Image.FromStream(new MemoryStream(data));
         }
 
-        public static Tmdb Tmdb 
-        { 
-            get { return tmdb; } 
+        public static Tmdb Tmdb
+        {
+            get { return tmdb; }
         }
         public static TmdbConfiguration Config
         {

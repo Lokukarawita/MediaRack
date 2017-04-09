@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace MediaRack.Core.Data.Common
+namespace MediaRack.Core.Data.Common.Metadata
 {
 
     public class CompositionMetaInfo : MetaInfo

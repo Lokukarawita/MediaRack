@@ -5,5 +5,13 @@
     <Setting Name="APIKEY_TMDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">500569e716c3a599be3b0b3f851092ad</Value>
     </Setting>
+    <Setting Name="MediaRackConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;data source="D:\I files\Apps\Github\MediaRack\src\Common\MediaRack.db3"&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SQLite.EF6&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">data source="D:\I files\Apps\Github\MediaRack\src\Common\MediaRack.db3"</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
