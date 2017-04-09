@@ -20,7 +20,7 @@ namespace MediaRack.Core.Data.Common
         XvidDivX,
         [Description("WMV")]
         WMV,
-        [Description("VP8/9")]
+        [Description("VP6/7/8/9")]
         VP,
 
         //--- Audio ---
@@ -34,6 +34,8 @@ namespace MediaRack.Core.Data.Common
         WMA,
         [Description("OGG")]
         OGG,
+        [Description("WAV/PCM")]
+        WAV,
 
         //--- Containers ---
         [Description("MP4")]
@@ -44,6 +46,8 @@ namespace MediaRack.Core.Data.Common
         MKV,
         [Description("WebM")]
         WEBM,
+        [Description("FLV")]
+        FLV,
 
         //--- Rips ---
         [Description("WebRip")]
