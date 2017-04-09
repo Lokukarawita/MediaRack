@@ -22,6 +22,9 @@ namespace MediaRack.Core.Data.Common.Mapping
             Map(x => x.Timestamp);
             Map(x => x.Grade);
             Map(x => x.Comment);
+            Map(x => x.Favorite);
+            Map(x => x.Bookmark);
+            Map(x => x.ImageCacheID);
             Map(x => x.IDInfo).CustomType<JsonMappableType<IDMetaInfo>>();
             Map(x => x.CompositionInfo).CustomType<JsonMappableType<CompositionMetaInfo>>();
             Map(x => x.FileInfo).CustomType<JsonMappableType<FileCollectionMetaInfo>>();

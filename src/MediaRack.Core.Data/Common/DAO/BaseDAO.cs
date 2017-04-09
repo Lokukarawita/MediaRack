@@ -11,21 +11,20 @@ namespace MediaRack.Core.Data.Common.DAO
 {
     public class BaseDAO<T, ID>
     {
-
-        public ISession GetSession()
+        public virtual ISession GetSession()
         {
             return ORM.ORMFactory.Instance.GetSession();
         }
 
-        public T Get(ID id)
+        public virtual T Get(ID id)
         {
             using (var ses = GetSession())
             {
                 return (T)ses.Get(typeof(T), id);
             }
         }
-        
-        public IList<T> Get()
+
+        public virtual IList<T> Get()
         {
             using (var ses = GetSession())
             {
@@ -33,7 +32,7 @@ namespace MediaRack.Core.Data.Common.DAO
             }
         }
 
-        public IList<T> Get(Expression<Func<T, bool>> predicate)
+        public virtual IList<T> Get(Expression<Func<T, bool>> predicate)
         {
             using (var ses = GetSession())
             {
@@ -44,7 +43,7 @@ namespace MediaRack.Core.Data.Common.DAO
             }
         }
 
-        public void Add(T item)
+        public virtual void Add(T item)
         {
             using (var ses = GetSession())
             {
@@ -63,7 +62,7 @@ namespace MediaRack.Core.Data.Common.DAO
             }
         }
 
-        public void Update(T item)
+        public virtual void Update(T item)
         {
             using (var ses = GetSession())
             {
@@ -82,7 +81,7 @@ namespace MediaRack.Core.Data.Common.DAO
             }
         }
 
-        public void Delete(ID id)
+        public virtual void Delete(ID id)
         {
             using (var ses = GetSession())
             {
@@ -101,6 +100,5 @@ namespace MediaRack.Core.Data.Common.DAO
                 }
             }
         }
-
     }
 }

@@ -69,7 +69,7 @@ namespace Testings
                 Title = "Big Hero 6",
                 Rating = 8.1,
                 Released = new DateTime(2014, 1, 1),
-                Plot = "Big airbag hero"
+                Overview = "Big airbag hero"
             };
 
             var entry = new MediaEntry();

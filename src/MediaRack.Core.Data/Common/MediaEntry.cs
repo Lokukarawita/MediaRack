@@ -64,6 +64,21 @@ namespace MediaRack.Core.Data.Common
         /// Comment by user
         /// </summary>
         public virtual string Comment { get; set; }
+
+        /// <summary>
+        /// Custom bookmark
+        /// </summary>
+        public virtual string Bookmark { get; set; }
+
+        /// <summary>
+        /// Is Favorite
+        /// </summary>
+        public virtual bool Favorite { get; set; }
+
+        /// <summary>
+        /// Local image cache id
+        /// </summary>
+        public virtual string ImageCacheID { get; set; }
         #endregion
 
         #region Metadata

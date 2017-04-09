@@ -11,9 +11,9 @@ namespace MediaRack.Core.Data.Remote
         void Open();
         void Close();
         void UpdateRemote(List<ISynchronizable> localData);
-        List<ISynchronizable> GetRemote();
-        List<ISynchronizable> GetRemote(DateTime lastSyc);
-        ISynchronizable GetRemote(int mediaRackId);
+        List<ISynchronizable> GetRemote(Type synchronizable);
+        List<ISynchronizable> GetRemote(DateTime lastSyc, Type synchronizable);
+        ISynchronizable GetRemote(int mediaRackId, Type synchronizable);
         bool CheckConnected();
     }
 }
