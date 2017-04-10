@@ -17,7 +17,7 @@ namespace MediaRack.Core.Api.TMDDb
 
         static TmdbClient()
         {
-            tmdb = new Tmdb(API_KEY);
+            tmdb = new Tmdb("500569e716c3a599be3b0b3f851092ad");
             config = tmdb.GetConfiguration();
         }
 

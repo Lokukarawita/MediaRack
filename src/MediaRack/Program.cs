@@ -16,7 +16,7 @@ namespace MediaRack
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             MediaRack.Core.Api.TMDDb.TmdbClient.API_KEY = Properties.Settings.Default.APIKEY_TMDB;
-            Application.Run(new TestForm());
+            Application.Run(new FrmMain());
         }
     }
 }
