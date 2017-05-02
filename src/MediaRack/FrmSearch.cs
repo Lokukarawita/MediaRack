@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WatTmdb.V3;
+using MediaRack.Core.Api.Mapping;
 
 namespace MediaRack
 {
@@ -38,9 +39,15 @@ namespace MediaRack
 
             if (listbx_search.SelectedIndex > -1)
             {
+
+
+
                
                 MovieResult cmr = (MovieResult)listbx_search.SelectedItem;
                 TmdbMovie mv = TmdbClient.Tmdb.GetMovieInfo(cmr.id);
+
+                var comp = mv.ToComposition();
+
                 //TmdbMovieCast mc = TmdbClient.Tmdb.GetMovieCast(cmr.id);
                 //TmdbMovieImages imgs = TmdbClient.Tmdb.GetMovieImages(mv.id);
 
@@ -71,6 +78,8 @@ namespace MediaRack
 
                 listbx_search.DataSource = search.results;
                 listbx_search.DisplayMember = "title";
+
+                
 
                 foreach (var item in search.results)
                 {
