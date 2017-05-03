@@ -1,4 +1,5 @@
 ﻿using MediaRack.Core.Data.Common;
+using MediaRack.Core.Data.Common.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,9 @@ namespace MediaRack.Core.Data.Remote
 
         void Disconnect();
 
-        void CheckConnection();
+        bool CheckConnection();
 
+        bool UpdateUserSettings(UserSettingsMetaInfo settings);
 
         void UpdateRemote(List<ISynchronizable> localData);
         

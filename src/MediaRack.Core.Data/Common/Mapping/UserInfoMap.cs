@@ -16,6 +16,8 @@ namespace MediaRack.Core.Data.Common.Mapping
             Table("UserInfo");
             Id(x => x.Username);
             Map(x => x.Password);
+            Map(x => x.Timestamp);
+            Map(x => x.LocalStatus, "SyncStatus").CustomType<LocalSyncStatus>().Default("NEW");
             Map(x => x.Settings).CustomType<JsonMappableType<UserSettingsMetaInfo>>();
         }
     }
