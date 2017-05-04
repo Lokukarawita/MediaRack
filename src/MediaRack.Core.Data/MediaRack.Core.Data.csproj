@@ -119,6 +119,8 @@
     <Compile Include="Common\LocalUserInfo.cs" />
     <Compile Include="Remote\MediaRackUser.cs" />
     <Compile Include="Remote\RemoteStorage.cs" />
+    <Compile Include="Remote\RemoteStorageAuthenticationException.cs" />
+    <Compile Include="Remote\RemoteStorageException.cs" />
     <Compile Include="Remote\TypeMap.cs" />
   </ItemGroup>
   <ItemGroup>
