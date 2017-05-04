@@ -65,6 +65,7 @@
     <Compile Include="Api\Mapping\TmdbGenreResolver.cs" />
     <Compile Include="Api\Mapping\TmdbReleaseDateResolver.cs" />
     <Compile Include="Api\TMDb\TmdbClient.cs" />
+    <Compile Include="Auth\UserManager.cs" />
     <Compile Include="Net\ImageDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

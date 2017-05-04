@@ -32,6 +32,12 @@ namespace Testings
 
     class Program
     {
+
+
+        
+        
+        
+        
         enum QLT
         {
             [Description("A Enum")]
@@ -43,7 +49,8 @@ namespace Testings
 
         static void Main(string[] args)
         {
-
+MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
+            
             var dao = new MediaEntryDAO();
 
             var finfo = new FileMetaInfo()

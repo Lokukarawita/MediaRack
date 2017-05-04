@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaRack.Core.Data.Remote
 {
+    /// <summary>
+    /// Conflict resolution criteria
+    /// </summary>
     public enum ConflictResolution
     {
         /// <summary>

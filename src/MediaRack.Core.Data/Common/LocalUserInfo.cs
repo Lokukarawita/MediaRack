@@ -15,16 +15,16 @@ namespace MediaRack.Core.Data.Common
             Settings = new UserSettingsMetaInfo();
         }
 
-        public string Username{get;set;}
+        public virtual string Username{get;set;}
 
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
-        public UserSettingsMetaInfo Settings { get; set; }
+        public virtual UserSettingsMetaInfo Settings { get; set; }
 
         #region ISyncedDTO
-        public LocalSyncStatus LocalStatus { get; set; }
+        public virtual LocalSyncStatus LocalStatus { get; set; }
 
-        public DateTime Timestamp{ get; set; }
+        public virtual DateTime Timestamp{ get; set; }
         #endregion
     }
 }
