@@ -8,6 +8,7 @@ using System.ComponentModel;
 using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Common.DAO;
+using MediaRack.Core.Data.Remote;
 
 namespace Testings
 {
@@ -49,7 +50,12 @@ namespace Testings
 
         static void Main(string[] args)
         {
-MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
+
+            MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
+            s.Connect();
+            //s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());
+            s.CheckAvailability("heshan");
+
             
             var dao = new MediaEntryDAO();
 

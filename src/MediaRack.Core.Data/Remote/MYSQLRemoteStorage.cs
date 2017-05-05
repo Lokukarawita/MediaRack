@@ -1,13 +1,14 @@
-﻿using System;
+﻿using MediaRack.Core.Data.Common;
+using MediaRack.Core.Data.Common.Metadata;
+using MediaRack.Core.Util.Hash;
+using MediaRack.Core.Util.Net;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
-using MediaRack.Core.Data.Common;
-using MediaRack.Core.Data.Common.Metadata;
-using MediaRack.Core.Util.Net;
-using System.Data;
 
 namespace MediaRack.Core.Data.Remote
 {
@@ -32,7 +33,23 @@ namespace MediaRack.Core.Data.Remote
 
         public override bool CheckAvailability(string username)
         {
-            throw new NotImplementedException();
+            if (IsConnected)
+            {
+                using (var cmd = new MySqlCommand("ACC_AVAIL", connection))
+                {
+                    try
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("username", username).Direction = ParameterDirection.Input;
+                        cmd.Parameters.Add("avail", MySqlDbType.Bit).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        var rv = Convert.ToBoolean(cmd.Parameters["avail"].Value);
+                        return true;
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return false;
         }
 
         public override bool ChangePassword(string oldpwd, string newpwd)
@@ -40,9 +57,25 @@ namespace MediaRack.Core.Data.Remote
             throw new NotImplementedException();
         }
 
-        public override bool SignUp(string username, string password, Common.Metadata.UserSettingsMetaInfo settings)
+        public override bool SignUp(string username, string password, UserSettingsMetaInfo settings)
         {
-            throw new NotImplementedException();
+            if (IsConnected)
+            {
+                using (var cmd = new MySqlCommand("SIGN_UP", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    try
+                    {
+                        cmd.Parameters.AddWithValue("username", username).Direction = ParameterDirection.Input;
+                        cmd.Parameters.AddWithValue("passwrd", password.Hash()).Direction = ParameterDirection.Input;
+                        cmd.Parameters.AddWithValue("settings", settings != null ? settings.ToJson() : "{}").Direction = ParameterDirection.Input;
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return false;
         }
 
         public override bool Connect()
