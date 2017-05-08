@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Common.Metadata;
 using NHibernate.JsonColumn;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Data.Common.Mapping
+namespace MediaRack.Core.Data.ORM.Mapping
 {
     public class UserInfoMap : ClassMap<LocalUserInfo>
     {

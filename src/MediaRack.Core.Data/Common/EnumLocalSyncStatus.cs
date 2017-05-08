@@ -23,5 +23,9 @@ namespace MediaRack.Core.Data.Common
         /// Local data was changed and a corresponding remote data entry needs to be updated 
         /// </summary>
         CHANGED,
+        /// <summary>
+        /// Items is marked for deletion
+        /// </summary>
+        DELETED
     }
 }

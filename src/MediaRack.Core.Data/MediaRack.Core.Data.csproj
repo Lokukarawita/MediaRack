@@ -95,14 +95,14 @@
     <Compile Include="Common\DAO\BaseDAO.cs" />
     <Compile Include="Common\DAO\MediaEntryDAO.cs" />
     <Compile Include="Common\DAO\UserInfoDAO.cs" />
-    <Compile Include="Common\Mapping\UserInfoMap.cs" />
+    <Compile Include="ORM\Mapping\UserInfoMap.cs" />
     <Compile Include="Common\Metadata\CompositionMetaInfo.cs" />
     <Compile Include="Common\Metadata\FileCollectionMetaInfo.cs" />
     <Compile Include="Common\Metadata\FileMetaInfo.cs" />
     <Compile Include="Common\Metadata\IDMetaInfo.cs" />
     <Compile Include="Common\ISynchronizable.cs" />
     <Compile Include="Common\EnumLocalSyncStatus.cs" />
-    <Compile Include="Common\Mapping\MediaEntryMap.cs" />
+    <Compile Include="ORM\Mapping\MediaEntryMap.cs" />
     <Compile Include="Common\EnumMediaClassification.cs" />
     <Compile Include="Common\MediaEntry.cs" />
     <Compile Include="Common\EnumMediaQuality.cs" />

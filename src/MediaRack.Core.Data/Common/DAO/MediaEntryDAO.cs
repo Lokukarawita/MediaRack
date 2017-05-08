@@ -11,13 +11,14 @@ namespace MediaRack.Core.Data.Common.DAO
         public override void Add(MediaEntry item)
         {
             item.LocalStatus = LocalSyncStatus.NEW;
-            
+            item.Timestamp = DateTime.UtcNow;
             base.Add(item);
         }
 
         public override void Update(MediaEntry item)
         {
             item.LocalStatus = LocalSyncStatus.CHANGED;
+            item.Timestamp = DateTime.UtcNow;
             base.Update(item);
         }
     }

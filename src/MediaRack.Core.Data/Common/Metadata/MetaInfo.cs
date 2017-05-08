@@ -16,7 +16,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         /// Convert serialized meta info string into MetaInfo object
         /// </summary>
         /// <typeparam name="T">Type of MetaInfo to be converted</typeparam>
-        /// <param name="serialized">Serialzed text</param>
+        /// <param name="serialized">Serialized text</param>
         /// <returns></returns>
         public static T FromJson<T>(string serialized) where T : MetaInfo
         {
