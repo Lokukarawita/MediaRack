@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaRack.Core.Data.Common.DAO
 {
-    public class MediaEntryDAO : BaseDAO<MediaEntry, int>
+    public class MediaEntryDAO : BaseDAO<MediaEntry, int>, ISyncedControlDTO<MediaEntry>
     {
         public override void Add(MediaEntry item)
         {
@@ -20,6 +20,12 @@ namespace MediaRack.Core.Data.Common.DAO
             item.LocalStatus = LocalSyncStatus.CHANGED;
             item.Timestamp = DateTime.UtcNow;
             base.Update(item);
+        }
+
+        public void MarkForDelete(MediaEntry entity)
+        {
+            entity.LocalStatus = LocalSyncStatus.DELETED;
+            base.Update(entity);
         }
     }
 }

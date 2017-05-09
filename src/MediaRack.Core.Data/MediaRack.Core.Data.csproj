@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Common\BaseEntity.cs" />
     <Compile Include="Common\DAO\BaseDAO.cs" />
+    <Compile Include="Common\DAO\ISyncControlDTO.cs" />
     <Compile Include="Common\DAO\MediaEntryDAO.cs" />
     <Compile Include="Common\DAO\UserInfoDAO.cs" />
     <Compile Include="ORM\Mapping\UserInfoMap.cs" />

@@ -54,7 +54,8 @@ namespace Testings
             MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
             s.Connect();
             //s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());
-            s.CheckAvailability("heshan");
+            //s.CheckAvailability("heshan");
+            var u= s.Authorize("heshan", "elooo");
 
             
             var dao = new MediaEntryDAO();

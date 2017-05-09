@@ -95,19 +95,44 @@ namespace MediaRack.Core.Data.Remote
         {
             if (IsConnected)
             {
-                using (var da = new MySqlDataAdapter("SELECT * FROM Users WHERE Username = @1", connection))
+                using (var cmd = new MySqlCommand("AUTHENTICATE", connection))
                 {
-                    da.SelectCommand.Parameters.AddWithValue("@1", username);
-                    var dt = new DataTable();
-                    da.Fill(dt);
+                    try
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("usrname", username).Direction = ParameterDirection.Input;
+                        cmd.Parameters.AddWithValue("passwrd", password.Hash()).Direction = ParameterDirection.Input;
+                        cmd.Parameters.Add("mrid", MySqlDbType.Int32).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("lasts", MySqlDbType.DateTime).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("sett", MySqlDbType.LongText).Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
 
-                    if (dt.Rows.Count == 0)
-                        throw new RemoteStorageAuthenticationException("Login failed, Cannot find the account");
-
+                        var mrid = (int)cmd.Parameters["mrid"].Value;
+                        if (mrid == -1)
+                        {
+                            throw new RemoteStorageAuthenticationException("Authentication failed");
+                        }
+                        else
+                        {
+                            var usr = new MediaRackUser();
+                            usr.Username = username;
+                            usr.MediaRackUserID = mrid;
+                            usr.LastSeen = (DateTime)cmd.Parameters["lasts"].Value;
+                            usr.Settings = UserSettingsMetaInfo.FromJson<UserSettingsMetaInfo>((string)cmd.Parameters["sett"].Value);
+                            usr.Password = "<BLOCKED>";
+                            return usr;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw new RemoteStorageException("Authorization error, Please contact the developers");
+                    }
                 }
             }
-
-            return new MediaRackUser();
+            else
+            {
+                throw new RemoteStorageException("Not connected");
+            }
         }
 
         public override void Disconnect()
