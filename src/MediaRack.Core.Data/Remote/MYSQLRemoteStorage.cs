@@ -14,6 +14,7 @@ namespace MediaRack.Core.Data.Remote
 {
     public class MYSQLRemoteStorage : RemoteStorage
     {
+        private MediaRackUser currentUser;
         private bool isauthorized;
         private MySqlConnection connection;
 
@@ -102,6 +103,7 @@ namespace MediaRack.Core.Data.Remote
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("usrname", username).Direction = ParameterDirection.Input;
                         cmd.Parameters.AddWithValue("passwrd", password.Hash()).Direction = ParameterDirection.Input;
+                        cmd.Parameters.AddWithValue("chktime", DateTime.UtcNow).Direction = ParameterDirection.Input;
                         cmd.Parameters.Add("mrid", MySqlDbType.Int32).Direction = ParameterDirection.Output;
                         cmd.Parameters.Add("lasts", MySqlDbType.DateTime).Direction = ParameterDirection.Output;
                         cmd.Parameters.Add("sett", MySqlDbType.LongText).Direction = ParameterDirection.Output;
@@ -114,13 +116,14 @@ namespace MediaRack.Core.Data.Remote
                         }
                         else
                         {
-                            var usr = new MediaRackUser();
-                            usr.Username = username;
-                            usr.MediaRackUserID = mrid;
-                            usr.LastSeen = (DateTime)cmd.Parameters["lasts"].Value;
-                            usr.Settings = UserSettingsMetaInfo.FromJson<UserSettingsMetaInfo>((string)cmd.Parameters["sett"].Value);
-                            usr.Password = "<BLOCKED>";
-                            return usr;
+                            currentUser = new MediaRackUser();
+                            currentUser.Username = username;
+                            currentUser.MediaRackUserID = mrid;
+                            currentUser.LastSeen = DateTime.SpecifyKind((DateTime)cmd.Parameters["lasts"].Value, DateTimeKind.Utc);
+                            currentUser.Settings = UserSettingsMetaInfo.FromJson<UserSettingsMetaInfo>((string)cmd.Parameters["sett"].Value);
+                            currentUser.Password = "<BLOCKED>";
+                            isauthorized = true;
+                            return currentUser;
                         }
                     }
                     catch (Exception)
@@ -165,7 +168,36 @@ namespace MediaRack.Core.Data.Remote
 
         public override bool UpdateUserSettings(UserSettingsMetaInfo settings)
         {
-            throw new NotImplementedException();
+            if (IsConnected)
+            {
+                if (IsAuthorized)
+                {
+                    using (var cmd = new MySqlCommand("SAVE_USERSETT", connection))
+                    {
+                        try
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("mrid", currentUser.MediaRackUserID).Direction = ParameterDirection.Input;
+                            cmd.Parameters.AddWithValue("sett", settings.ToJson()).Direction = ParameterDirection.Input;
+                            cmd.ExecuteNonQuery();
+                            currentUser.Settings = settings;
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new RemoteStorageAuthenticationException("Authorization required");
+                }
+            }
+            else
+            {
+                throw new RemoteStorageException("Not connected");
+            }
         }
 
         public override void UpdateRemote(List<ISynchronizable> localData)
