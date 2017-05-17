@@ -12,10 +12,11 @@ namespace MediaRack.Core.Data.Remote
         public RemoteSyncResult()
         {
             Synced = new List<ISynchronizable>();
-            Errors = new List<ISynchronizable>();
+            Errors = new List<SyncError>();
         }
 
         public List<ISynchronizable> Synced { get; set; }
-        public List<ISynchronizable> Errors { get; set; }
+        
+        public List<SyncError> Errors { get; set; }
     }
 }
