@@ -122,6 +122,7 @@
     <Compile Include="Remote\RemoteStorage.cs" />
     <Compile Include="Remote\RemoteStorageAuthenticationException.cs" />
     <Compile Include="Remote\RemoteStorageException.cs" />
+    <Compile Include="Remote\RemoteSyncResult.cs" />
     <Compile Include="Remote\TypeMap.cs" />
   </ItemGroup>
   <ItemGroup>

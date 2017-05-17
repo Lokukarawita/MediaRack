@@ -33,7 +33,7 @@ namespace MediaRack.Core.Data.Remote
 
         bool UpdateUserSettings(UserSettingsMetaInfo settings);
 
-        void UpdateRemote(List<ISynchronizable> localData);
+        RemoteSyncResult UpdateRemote(List<ISynchronizable> localData);
 
         List<ISynchronizable> GetRemote(Type synchronizable);
 

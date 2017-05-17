@@ -55,7 +55,36 @@ namespace MediaRack.Core.Data.Remote
 
         public override bool ChangePassword(string oldpwd, string newpwd)
         {
-            throw new NotImplementedException();
+            if (IsConnected)
+            {
+                if (IsAuthorized)
+                {
+                    using (var cmd = new MySqlCommand("CHANGE_PWD", connection))
+                    {
+                        try
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("mrid", currentUser.MediaRackUserID).Direction = ParameterDirection.Input;
+                            cmd.Parameters.AddWithValue("oldpasswrd", oldpwd.Hash()).Direction = ParameterDirection.Input;
+                            cmd.Parameters.AddWithValue("newpasswrd", newpwd.Hash()).Direction = ParameterDirection.Input;
+                            cmd.ExecuteNonQuery();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new RemoteStorageAuthenticationException("Authorization required");
+                }
+            }
+            else
+            {
+                throw new RemoteStorageException("Not connected");
+            }
         }
 
         public override bool SignUp(string username, string password, UserSettingsMetaInfo settings)
@@ -126,9 +155,12 @@ namespace MediaRack.Core.Data.Remote
                             return currentUser;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        throw new RemoteStorageException("Authorization error, Please contact the developers");
+                        if (ex.GetType() == typeof(RemoteStorageAuthenticationException)) 
+                            throw ex;
+                        else
+                            throw new RemoteStorageException("Authorization error, Please contact the developers");
                     }
                 }
             }
@@ -200,7 +232,7 @@ namespace MediaRack.Core.Data.Remote
             }
         }
 
-        public override void UpdateRemote(List<ISynchronizable> localData)
+        public override RemoteSyncResult UpdateRemote(List<ISynchronizable> localData)
         {
             throw new NotImplementedException();
         }

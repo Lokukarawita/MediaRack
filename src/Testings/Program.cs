@@ -56,9 +56,10 @@ namespace Testings
             //s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());
             //s.CheckAvailability("heshan");
             var u= s.Authorize("heshan", "elooo");
+            s.ChangePassword("elooo", "elo");
             //set.WatchDir.Add(@"C:\D");
-            u.Settings.ConflictProtocol = ConflictResolution.KeepRemote;
-            s.UpdateUserSettings(u.Settings);
+            //u.Settings.ConflictProtocol = ConflictResolution.KeepRemote;
+            //s.UpdateUserSettings(u.Settings);
             
             var dao = new MediaEntryDAO();
 
