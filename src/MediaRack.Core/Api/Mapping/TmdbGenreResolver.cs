@@ -9,7 +9,7 @@ using WatTmdb.V3;
 
 namespace MediaRack.Core.Api.Mapping
 {
-    public class TmdbGenreResolver : AutoMapper.IValueResolver<TmdbMovie, CompositionMetaInfo, List<string>>
+    internal class TmdbGenreResolver : AutoMapper.IValueResolver<TmdbMovie, CompositionMetaInfo, List<string>>
     {
         public List<string> Resolve(TmdbMovie source, CompositionMetaInfo destination, List<string> destMember, ResolutionContext context)
         {

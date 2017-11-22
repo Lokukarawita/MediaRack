@@ -24,6 +24,11 @@ namespace MediaRack.Core.Data.Common
 
         #region MediaRack
         /// <summary>
+        /// Id for the local rack
+        /// </summary>
+        public virtual int LocalRackID { get; set; }
+        
+        /// <summary>
         /// MediaRack id
         /// </summary>
         public virtual int MediaRackID { get; set; }

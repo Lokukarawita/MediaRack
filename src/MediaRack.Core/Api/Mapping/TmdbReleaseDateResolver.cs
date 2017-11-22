@@ -9,7 +9,7 @@ using WatTmdb.V3;
 
 namespace MediaRack.Core.Api.Mapping
 {
-    public class TmdbReleaseDateResolver : IValueResolver<TmdbMovie, CompositionMetaInfo, DateTime>
+    internal class TmdbReleaseDateResolver : IValueResolver<TmdbMovie, CompositionMetaInfo, DateTime>
     {
         public DateTime Resolve(TmdbMovie source, CompositionMetaInfo destination, DateTime destMember, ResolutionContext context)
         {

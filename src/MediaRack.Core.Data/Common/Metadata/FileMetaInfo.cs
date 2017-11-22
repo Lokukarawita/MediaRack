@@ -11,11 +11,15 @@ namespace MediaRack.Core.Data.Common.Metadata
     {
         public FileMetaInfo()
         {
+            Subtitles = new List<SubtitleMetaInfo>();
             QualityTags = new HashSet<MediaQuality>();
         }
 
         [JsonProperty("group")]
         public string Group { get; set; }
+
+        [JsonProperty("subtitles")]
+        public List<SubtitleMetaInfo> Subtitles { get; set; }
 
         [JsonProperty("quality")]
         public HashSet<MediaQuality> QualityTags { get; set; }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Data.ORM.Mapping
+namespace MediaRack.Core.Data.Local.ORM.Mapping
 {
     public class UserInfoMap : ClassMap<LocalUserInfo>
     {

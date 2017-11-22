@@ -8,14 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Data.ORM.Mapping
+namespace MediaRack.Core.Data.Local.ORM.Mapping
 {
     public class MediaEntryMap : ClassMap<MediaEntry>
     {
         public MediaEntryMap()
         {
             Table("Rack");
-            Id(x => x.MediaRackID).GeneratedBy.Identity();
+            Id(x => x.LocalRackID).GeneratedBy.Identity();
+            Map(x => x.MediaRackID);
             Map(x => x.Classification).CustomType<MediaClassification>();
             Map(x => x.LocalStatus, "SyncStatus").CustomType<LocalSyncStatus>().Default("NEW");
             Map(x => x.Watched);

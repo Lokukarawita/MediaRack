@@ -92,18 +92,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaseEntity.cs" />
-    <Compile Include="Common\DAO\BaseDAO.cs" />
-    <Compile Include="Common\DAO\ISyncControlDTO.cs" />
-    <Compile Include="Common\DAO\MediaEntryDAO.cs" />
-    <Compile Include="Common\DAO\UserInfoDAO.cs" />
-    <Compile Include="ORM\Mapping\UserInfoMap.cs" />
+    <Compile Include="Common\Metadata\SubtitleMetaInfo.cs" />
+    <Compile Include="Local\DAO\BaseDAO.cs" />
+    <Compile Include="Local\DAO\ISyncControlDTO.cs" />
+    <Compile Include="Local\DAO\MediaEntryDAO.cs" />
+    <Compile Include="Local\DAO\UserInfoDAO.cs" />
+    <Compile Include="Common\Metadata\WatchDirMetaInfo.cs" />
+    <Compile Include="Local\ORM\Mapping\UserInfoMap.cs" />
     <Compile Include="Common\Metadata\CompositionMetaInfo.cs" />
     <Compile Include="Common\Metadata\FileCollectionMetaInfo.cs" />
     <Compile Include="Common\Metadata\FileMetaInfo.cs" />
     <Compile Include="Common\Metadata\IDMetaInfo.cs" />
     <Compile Include="Common\ISynchronizable.cs" />
     <Compile Include="Common\EnumLocalSyncStatus.cs" />
-    <Compile Include="ORM\Mapping\MediaEntryMap.cs" />
+    <Compile Include="Local\ORM\Mapping\MediaEntryMap.cs" />
     <Compile Include="Common\EnumMediaClassification.cs" />
     <Compile Include="Common\MediaEntry.cs" />
     <Compile Include="Common\EnumMediaQuality.cs" />
@@ -112,7 +114,7 @@
     <Compile Include="Common\IUserInfoFields.cs" />
     <Compile Include="Local\DBConnection.cs" />
     <Compile Include="Local\MovieFiles.cs" />
-    <Compile Include="ORM\ORMFactory.cs" />
+    <Compile Include="Local\ORM\ORMFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Remote\MYSQLRemoteStorage.cs" />
     <Compile Include="Remote\EnumConflictResolution.cs" />

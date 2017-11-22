@@ -51,6 +51,17 @@ namespace Testings
         static void Main(string[] args)
         {
 
+            System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
+            fsw.Created += (x, y) => {
+                Console.WriteLine("Created " + y.FullPath);
+            };
+            fsw.Filter = "*.txt";
+            fsw.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+            fsw.EnableRaisingEvents = true;
+
+            Console.ReadLine();
+
+
             MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
             s.Connect();
             //s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());

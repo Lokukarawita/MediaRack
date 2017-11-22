@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Data.ORM
+namespace MediaRack.Core.Data.Local.ORM
 {
     public class ORMFactory
     {

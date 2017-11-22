@@ -55,5 +55,11 @@ namespace MediaRack.Core.Data.Remote
 
         public abstract bool IsConnected { get;}
 
+
+
+        RemoteSyncResult IRemoteStorage.UpdateRemote(List<ISynchronizable> localData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -27,7 +27,8 @@ namespace MediaRack.Core.Data.Remote
 
         private void InitConnection()
         {
-            connection = new MySqlConnection("server=03d2348e-6414-46d2-a888-a7330079aa08.mysql.sequelizer.com;database=db03d2348e641446d2a888a7330079aa08;uid=svicvogivbqevucl;pwd=nR4iiYjHomeEgzsDiz4PZ4bUQh4TiqTwdMpPMT23QTXMCSmyThby4zKrQiAa5yy7");
+            //connection = new MySqlConnection("server=03d2348e-6414-46d2-a888-a7330079aa08.mysql.sequelizer.com;database=db03d2348e641446d2a888a7330079aa08;uid=svicvogivbqevucl;pwd=nR4iiYjHomeEgzsDiz4PZ4bUQh4TiqTwdMpPMT23QTXMCSmyThby4zKrQiAa5yy7");
+            connection = new MySqlConnection("server=localhost;database=db03d2348e641446d2a888a7330079aa08;uid=root;pwd=root");
         }
 
 
@@ -155,12 +156,13 @@ namespace MediaRack.Core.Data.Remote
                             return currentUser;
                         }
                     }
+                    catch (RemoteStorageAuthenticationException ex)
+                    {
+                        throw ex;
+                    }
                     catch (Exception ex)
                     {
-                        if (ex.GetType() == typeof(RemoteStorageAuthenticationException)) 
-                            throw ex;
-                        else
-                            throw new RemoteStorageException("Authorization error, Please contact the developers");
+                        throw new RemoteStorageException("Authorization error, Please contact the developers", ex);
                     }
                 }
             }
@@ -232,10 +234,7 @@ namespace MediaRack.Core.Data.Remote
             }
         }
 
-        public override RemoteSyncResult UpdateRemote(List<ISynchronizable> localData)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public override List<ISynchronizable> GetRemote(Type synchronizable)
         {
@@ -267,6 +266,11 @@ namespace MediaRack.Core.Data.Remote
         public override bool IsConnected
         {
             get { return CheckConnection(); }
+        }
+
+        public override void UpdateRemote(List<ISynchronizable> localData)
+        {
+            throw new NotImplementedException();
         }
     }
 }

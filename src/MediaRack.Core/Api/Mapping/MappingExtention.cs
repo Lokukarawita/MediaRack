@@ -9,9 +9,9 @@ using MediaRack.Core.Data.Common.Metadata;
 
 namespace MediaRack.Core.Api.Mapping
 {
-    public static class Automap
+    public static class MappingExtention
     {
-        static Automap()
+        static MappingExtention()
         {
             Mapper.Initialize(cfg =>
             {
@@ -28,6 +28,11 @@ namespace MediaRack.Core.Api.Mapping
         }
 
 
+        /// <summary>
+        /// Map WatTmdb.V3.TmdbMovie to CompositionMetaInfo
+        /// </summary>
+        /// <param name="movie"></param>
+        /// <returns></returns>
         public static CompositionMetaInfo ToComposition(this TmdbMovie movie)
         {
             return Mapper.Map<CompositionMetaInfo>(movie);

@@ -7,13 +7,13 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Data.Common.DAO
+namespace MediaRack.Core.Data.Local.DAO
 {
-    public class BaseDAO<T, ID>
+    public abstract class BaseDAO<T, ID>
     {
         public virtual ISession GetSession()
         {
-            return ORM.ORMFactory.Instance.GetSession();
+            return MediaRack.Core.Data.Local.ORM.ORMFactory.Instance.GetSession();
         }
 
         public virtual T Get(ID id)
