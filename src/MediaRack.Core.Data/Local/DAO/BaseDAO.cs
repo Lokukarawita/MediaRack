@@ -43,6 +43,11 @@ namespace MediaRack.Core.Data.Local.DAO
             }
         }
 
+        public virtual IQueryable<T> GetQuery(ISession session)
+        {
+            return session.Query<T>();
+        }
+
         public virtual void Add(T item)
         {
             using (var ses = GetSession())

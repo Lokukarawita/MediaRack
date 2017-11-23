@@ -69,5 +69,19 @@ namespace MediaRack.Core.Util.Hash
         {
             return ComputeHash(d, algo);
         }
+
+        public static string HashFile(string filePath, string algo = "MD5")
+        {
+            algo = string.IsNullOrWhiteSpace(algo) ? "MD5" : algo;
+            using (var md5 = HashAlgorithm.Create(algo))
+            {
+                using (var file = System.IO.File.OpenRead(filePath))
+                {
+                    var hash = md5.ComputeHash(file);
+                    var str = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                    return str;
+                }
+            }
+        }
     }
 }

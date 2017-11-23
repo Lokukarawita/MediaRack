@@ -1,0 +1,4 @@
+
+ffmpeg -i mp4.mp4 -vf select='gt(scene\,0.5)',scale=192:108,tile -frames:v 1 D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\_preview_scene.png
+ffmpeg -i mp4.mp4 -vf select='eq(pict_type\,I)',scale=192:108,tile -frames:v 1 D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\_preview_I_frame.png
+ffmpeg -i mp4.mp4 -f GIF -vf "fps=fps=5,scale=out_range=auto:force_original_aspect_ratio=decrease:'if(gt(a,1/1),128,-1)':'if(gt(a,1/1),-1,128)':sws_dither=a_dither:sws_flags=bicubic+accurate_rnd+full_chroma_inp+full_chroma_int:sws_dither=a_dither,pad=128:128:(ow-iw)/2:(oh-ih)/2,setsar=sar=1/1" -pix_fmt rgb8 -loop 0 -final_delay 1 -default_delay 1 -y D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\_thumb.gif

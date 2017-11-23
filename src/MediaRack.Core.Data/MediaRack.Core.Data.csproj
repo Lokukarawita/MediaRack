@@ -92,12 +92,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaseEntity.cs" />
+    <Compile Include="Common\LocalFileQueueItem.cs" />
     <Compile Include="Common\Metadata\SubtitleMetaInfo.cs" />
     <Compile Include="Local\DAO\BaseDAO.cs" />
+    <Compile Include="Local\DAO\FileQueueDAO.cs" />
     <Compile Include="Local\DAO\ISyncControlDTO.cs" />
     <Compile Include="Local\DAO\MediaEntryDAO.cs" />
     <Compile Include="Local\DAO\UserInfoDAO.cs" />
     <Compile Include="Common\Metadata\WatchDirMetaInfo.cs" />
+    <Compile Include="Local\ORM\Mapping\LocalFileQueueItemMap.cs" />
     <Compile Include="Local\ORM\Mapping\UserInfoMap.cs" />
     <Compile Include="Common\Metadata\CompositionMetaInfo.cs" />
     <Compile Include="Common\Metadata\FileCollectionMetaInfo.cs" />
