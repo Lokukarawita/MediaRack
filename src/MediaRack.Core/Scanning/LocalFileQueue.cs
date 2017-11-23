@@ -31,6 +31,7 @@ namespace MediaRack.Core.Scanning
 
         public LocalFileQueue()
         {
+            lockDao = new object();
             dao = new FileQueueDAO();
         }
 

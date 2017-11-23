@@ -8,11 +8,11 @@ namespace MediaRack.Core.Data.Common
 {
     public class LocalFileQueueItem
     {
-        public int FileId { get; set; }
-        public string FilePath { get; set; }
-        public string MD5 { get; set; }
-        public long FileSize { get; set; }
-        public bool Processed { get; set; }
-        public DateTime Added { get; set; }
+        public virtual int FileId { get; set; }
+        public virtual string FilePath { get; set; }
+        public virtual string MD5 { get; set; }
+        public virtual long FileSize { get; set; }
+        public virtual bool Processed { get; set; }
+        public virtual DateTime Added { get; set; }
     }
 }

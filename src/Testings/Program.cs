@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.ComponentModel;
 using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Data.Common;
-using MediaRack.Core.Data.Common.DAO;
+using MediaRack.Core.Data.Local.DAO;
 using MediaRack.Core.Data.Remote;
 
 namespace Testings
@@ -50,6 +50,11 @@ namespace Testings
 
         static void Main(string[] args)
         {
+
+           var item =  MediaRack.Core.Scanning.LocalFileQueue.Instance.Dequeue();
+
+
+
 
             System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
             fsw.Created += (x, y) => {
