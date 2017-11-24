@@ -16,9 +16,10 @@ namespace MediaRack.Core.Data.Local.ORM.Mapping
             Id(x => x.FileId).GeneratedBy.Identity();
             Map(x => x.FilePath);
             Map(x => x.FileSize);
-            Map(x => x.MD5); 
-            Map(x => x.Processed);
+            Map(x => x.MD5);       
             Map(x => x.Added);
+            Map(x => x.ProcessStatus).CustomType<Data.Common.LocalFileProcessState>().Column("Status");
+            Map(x => x.TryCount).Default("0");
         }
     }
 }

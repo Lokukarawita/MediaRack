@@ -12,7 +12,8 @@ namespace MediaRack.Core.Data.Common
         public virtual string FilePath { get; set; }
         public virtual string MD5 { get; set; }
         public virtual long FileSize { get; set; }
-        public virtual bool Processed { get; set; }
         public virtual DateTime Added { get; set; }
+        public virtual LocalFileProcessState ProcessStatus { get; set; }
+        public virtual int TryCount { get; set; }
     }
 }

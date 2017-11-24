@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaRack.Core.Util.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,28 +10,61 @@ namespace MediaRack.Core.Scanning
 {
     public class DirectoryWatch : IDisposable
     {
+        private log4net.ILog log;
         private bool isProcessing;
         private Timer timer;
 
         public DirectoryWatch(string dir)
         {
             Directory = dir;
+            Filters = MediaRack.Core.Util.Configuration.ConfigData.COMPATIBLE_MEDIA_TYPES;
+            Init();
         }
 
         private void Init()
         {
+            log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             timer = new Timer();
             timer.Elapsed += timer_Elapsed;
+
+            var seconds = ConfigKeys.KEY_DIR_SCANINTERVAL.GetConfigValue<double>(60);
+            timer.Interval = TimeSpan.FromSeconds(seconds).TotalMilliseconds;
+            
+            timer.Start();
         }
 
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (isProcessing)
                 return;
+            try
+            {
+                isProcessing = true;
+                var enumbrl = Filters.SelectMany(x => System.IO.Directory.EnumerateFiles(Directory, "*" + x, System.IO.SearchOption.AllDirectories));
+                Parallel.ForEach<string>(enumbrl,
+                    new ParallelOptions() { MaxDegreeOfParallelism = 5 },
+                    x =>
+                    {
+                        try
+                        {
+                            Core.Data.Local.LocalFileQueue.Instance.AddFile(x);
+                            log.DebugFormat("DIR_WATCH: File added {0}", x);
+                        }
+                        catch (Exception ex)
+                        {
+                            log.DebugFormat("DIR_WATCH: File added error {0}", ex.Message);
+                        }
 
-            isProcessing = true;
-            var enumbrl = Filters.SelectMany(x => System.IO.Directory.EnumerateFiles(Directory, x)).ToList();
-           //
+                    });
+
+            }
+            catch (Exception ex)
+            {
+                log.DebugFormat("DIR_WATCH: File added error {0}", ex.Message);
+            }
+
+
             isProcessing = false;
         }
 

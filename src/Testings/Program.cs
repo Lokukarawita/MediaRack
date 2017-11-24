@@ -34,7 +34,7 @@ namespace Testings
     class Program
     {
 
-
+      
         
         
         
@@ -50,32 +50,37 @@ namespace Testings
 
         static void Main(string[] args)
         {
-
-           var item =  MediaRack.Core.Scanning.LocalFileQueue.Instance.Dequeue();
-
-
-
-
-            System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
-            fsw.Created += (x, y) => {
-                Console.WriteLine("Created " + y.FullPath);
-            };
-            fsw.Filter = "*.txt";
-            fsw.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-            fsw.EnableRaisingEvents = true;
-
+            MediaRack.Core.Scanning.DirectoryWatch w = new MediaRack.Core.Scanning.DirectoryWatch(@"D:\I files\My\MV\Damith");
             Console.ReadLine();
 
+            //var took = MediaRack.Core.Data.Local.LocalFileQueue.Instance.TakeFile();
+            //Console.ReadLine();
 
-            MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
-            s.Connect();
-            //s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());
-            //s.CheckAvailability("heshan");
-            var u= s.Authorize("heshan", "elooo");
-            s.ChangePassword("elooo", "elo");
-            //set.WatchDir.Add(@"C:\D");
-            //u.Settings.ConflictProtocol = ConflictResolution.KeepRemote;
-            //s.UpdateUserSettings(u.Settings);
+           //var item =  MediaRack.Core.Scanning.LocalFileQueue.Instance.Dequeue();
+
+
+
+
+           // System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
+           // fsw.Created += (x, y) => {
+           //     Console.WriteLine("Created " + y.FullPath);
+           // };
+           // fsw.Filter = "*.txt";
+           // fsw.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+           // fsw.EnableRaisingEvents = true;
+
+           // Console.ReadLine();
+
+
+            //MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
+            //s.Connect();
+            ////s.SignUp("heshan", "elooo", new UserSettingsMetaInfo());
+            ////s.CheckAvailability("heshan");
+            //var u= s.Authorize("heshan", "elooo");
+            //s.ChangePassword("elooo", "elo");
+            ////set.WatchDir.Add(@"C:\D");
+            ////u.Settings.ConflictProtocol = ConflictResolution.KeepRemote;
+            ////s.UpdateUserSettings(u.Settings);
             
             var dao = new MediaEntryDAO();
 
@@ -96,6 +101,7 @@ namespace Testings
             finfo.QualityTags.Add(MediaQuality.HD1080P);
             finfo.QualityTags.Add(MediaQuality.Audio);
             finfo.QualityTags.Add(MediaQuality.Video);
+            finfo.Subtitles.Add(new SubtitleMetaInfo() { IsEmbedded = true, Language = "English" });
 
             var compos = new CompositionMetaInfo()
             {
