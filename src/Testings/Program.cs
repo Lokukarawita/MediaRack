@@ -50,8 +50,8 @@ namespace Testings
 
         static void Main(string[] args)
         {
-            MediaRack.Core.Scanning.DirectoryWatch w = new MediaRack.Core.Scanning.DirectoryWatch(@"D:\I files\My\MV\Damith");
-            Console.ReadLine();
+            //MediaRack.Core.Scanning.DirectoryWatch w = new MediaRack.Core.Scanning.DirectoryWatch(@"D:\I files\My\MV\Damith");
+            //Console.ReadLine();
 
             //var took = MediaRack.Core.Data.Local.LocalFileQueue.Instance.TakeFile();
             //Console.ReadLine();

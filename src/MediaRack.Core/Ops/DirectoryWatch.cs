@@ -1,4 +1,5 @@
-﻿using MediaRack.Core.Util.Configuration;
+﻿using MediaRack.Core.Data.Common.Metadata;
+using MediaRack.Core.Util.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace MediaRack.Core.Scanning
+namespace MediaRack.Core.Ops
 {
     public class DirectoryWatch : IDisposable
     {
@@ -14,10 +15,18 @@ namespace MediaRack.Core.Scanning
         private bool isProcessing;
         private Timer timer;
 
-        public DirectoryWatch(string dir)
+        public event EventHandler DirectoryChecked;
+
+        public DirectoryWatch(WatchDirMetaInfo dir)
         {
-            Directory = dir;
+            DirectoryInfo = dir;
             Filters = MediaRack.Core.Util.Configuration.ConfigData.COMPATIBLE_MEDIA_TYPES;
+            Init();
+        }
+        public DirectoryWatch(WatchDirMetaInfo dir, string[] mediaTypeFilters)
+        {
+            DirectoryInfo = dir;
+            Filters = mediaTypeFilters;
             Init();
         }
 
@@ -41,7 +50,7 @@ namespace MediaRack.Core.Scanning
             try
             {
                 isProcessing = true;
-                var enumbrl = Filters.SelectMany(x => System.IO.Directory.EnumerateFiles(Directory, "*" + x, System.IO.SearchOption.AllDirectories));
+                var enumbrl = Filters.SelectMany(x => System.IO.Directory.EnumerateFiles(DirectoryInfo.Directory, "*" + x, System.IO.SearchOption.AllDirectories));
                 Parallel.ForEach<string>(enumbrl,
                     new ParallelOptions() { MaxDegreeOfParallelism = 5 },
                     x =>
@@ -58,6 +67,8 @@ namespace MediaRack.Core.Scanning
 
                     });
 
+                if (DirectoryChecked != null)
+                    DirectoryChecked(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -68,7 +79,7 @@ namespace MediaRack.Core.Scanning
             isProcessing = false;
         }
 
-        public string Directory { get; private set; }
+        public WatchDirMetaInfo DirectoryInfo { get; private set; }
         public string[] Filters { get; private set; }
 
         public void Dispose()

@@ -38,5 +38,9 @@ namespace MediaRack.Core.Util.Configuration
             ".webm",
             ".wmv"
         };
+        public static readonly string[] KNOWN_TAG_TYPES = new string[]
+        {
+            "|movie_name|", "|year|", "|quality|", "|filename_unformatted|"
+        };
     }
 }
