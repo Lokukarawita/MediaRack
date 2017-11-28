@@ -12,7 +12,7 @@ namespace MediaRack.Core.Data.Common.Metadata
     {
         public WatchDirMetaInfo()
         {
-            var fldrSeq = ConfigKeys.KEY_FILPROC_DEFAULTFOLDERSEQ.GetConfigValue<string>(@"|movie_name| (|year|) [|quality|]\|filename_unformatted|");
+            FolderStructureSeq = ConfigKeys.KEY_FILPROC_DEFAULTFOLDERSEQ.GetConfigValue<string>(@"|movie_name| (|year|) [|quality|]\|filename_unformatted|");
         }
 
         [JsonProperty("pcName")]

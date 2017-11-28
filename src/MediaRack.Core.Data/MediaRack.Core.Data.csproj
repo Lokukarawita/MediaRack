@@ -97,7 +97,9 @@
   <ItemGroup>
     <Compile Include="Common\BaseEntity.cs" />
     <Compile Include="Common\EnumLocalFileProcessState.cs" />
+    <Compile Include="Common\EnumPersonClassification.cs" />
     <Compile Include="Common\LocalFileQueueItem.cs" />
+    <Compile Include="Common\Metadata\PersonMetaInfo.cs" />
     <Compile Include="Common\Metadata\SubtitleMetaInfo.cs" />
     <Compile Include="Local\DAO\BaseDAO.cs" />
     <Compile Include="Local\DAO\FileQueueDAO.cs" />

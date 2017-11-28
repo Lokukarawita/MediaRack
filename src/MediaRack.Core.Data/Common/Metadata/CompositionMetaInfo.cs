@@ -13,6 +13,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         public CompositionMetaInfo()
         {
             Genres = new List<string>();
+            Cast = new List<PersonMetaInfo>();
         }
 
         //---- Common ----
@@ -22,6 +23,9 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("overview")]
         public string Overview { get; set; }
+
+        [JsonProperty("cast")]
+        public List<PersonMetaInfo> Cast { get; set; }
 
         //---- Movie ----
 
