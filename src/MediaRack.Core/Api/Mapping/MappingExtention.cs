@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WatTmdb.V3;
 using MediaRack.Core.Data.Common.Metadata;
+using MediaRack.Core.Data.Common;
 
 namespace MediaRack.Core.Api.Mapping
 {
@@ -24,6 +25,18 @@ namespace MediaRack.Core.Api.Mapping
                     //.ForMember(dst => dst.Genres, opt => opt.MapFrom(src => src.genres.Select(x => x.name).ToList()))
                     .ForMember(dst => dst.Genres, opt => opt.ResolveUsing<TmdbGenreResolver>())
                     .ForMember(dst => dst.Released, opt => opt.ResolveUsing<TmdbReleaseDateResolver>());
+
+                cfg.CreateMap<Cast, PersonMetaInfo>()
+                    .ForMember(dst => dst.Name, opt => opt.MapFrom(src => src.name))
+                    .ForMember(dst => dst.CreditedAs, opt => opt.MapFrom(src => src.character))
+                    .ForMember(dst => dst.TmdbID, opt => opt.MapFrom(src => src.id))
+                    .ForMember(dst => dst.Name, opt => opt.UseValue<PersonClassification>(PersonClassification.Cast));
+
+                cfg.CreateMap<Crew, PersonMetaInfo>()
+                    .ForMember(dst => dst.Name, opt => opt.MapFrom(src => src.name))
+                    .ForMember(dst => dst.CreditedAs, opt => opt.MapFrom(src => src.job))
+                    .ForMember(dst => dst.TmdbID, opt => opt.MapFrom(src => src.id))
+                    .ForMember(dst => dst.Name, opt => opt.UseValue<PersonClassification>(PersonClassification.Crew));
             });
         }
 
