@@ -26,8 +26,8 @@ namespace MediaRack.Core.Data.Common
         //--- Audio ---
         [Description("MP3")]
         MP3,
-        [Description("ACC")]
-        ACC,
+        [Description("AAC")]
+        AAC,
         [Description("AC3")]
         AC3,
         [Description("WMA")]

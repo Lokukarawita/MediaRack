@@ -23,6 +23,7 @@ namespace MediaRack.Core.Ops
             Filters = MediaRack.Core.Util.Configuration.ConfigData.COMPATIBLE_MEDIA_TYPES;
             Init();
         }
+        
         public DirectoryWatch(WatchDirMetaInfo dir, string[] mediaTypeFilters)
         {
             DirectoryInfo = dir;
@@ -80,6 +81,7 @@ namespace MediaRack.Core.Ops
         }
 
         public WatchDirMetaInfo DirectoryInfo { get; private set; }
+        
         public string[] Filters { get; private set; }
 
         public void Dispose()

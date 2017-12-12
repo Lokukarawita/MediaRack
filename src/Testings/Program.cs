@@ -9,6 +9,7 @@ using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Local.DAO;
 using MediaRack.Core.Data.Remote;
+using System.Text.RegularExpressions;
 
 namespace Testings
 {
@@ -34,11 +35,11 @@ namespace Testings
     class Program
     {
 
-      
-        
-        
-        
-        
+
+
+
+
+
         enum QLT
         {
             [Description("A Enum")]
@@ -50,26 +51,71 @@ namespace Testings
 
         static void Main(string[] args)
         {
+            
+
+            var ptrn = @"|movie_name| (|year|) [|quality|]";
+            var str = @"MY MOVIE (2013) [720p]";
+            //Regex r = new Regex(@"[^a-zA-Z-0-9_|\s]+");
+            //var m = r.Matches(str);
+
+            var data = new List<string>();
+            StringBuilder srb = new StringBuilder();
+
+            foreach (var item in str)
+            {
+                if (Regex.IsMatch(item.ToString(), @"[^a-z0-9_\s|]+", RegexOptions.IgnoreCase)) {
+
+                    var curV = srb.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(curV))
+                        data.Add(curV);
+                    srb.Clear();
+                }
+                else
+                {
+                    srb.Append(item);
+                }
+            }
+
+            var mat = Regex.Matches(ptrn, @"[a-z0-9_|]+", RegexOptions.IgnoreCase);
+
+
+            Console.ReadLine();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //MediaRack.Core.Scanning.DirectoryWatch w = new MediaRack.Core.Scanning.DirectoryWatch(@"D:\I files\My\MV\Damith");
             //Console.ReadLine();
 
             //var took = MediaRack.Core.Data.Local.LocalFileQueue.Instance.TakeFile();
             //Console.ReadLine();
 
-           //var item =  MediaRack.Core.Scanning.LocalFileQueue.Instance.Dequeue();
+            //var item =  MediaRack.Core.Scanning.LocalFileQueue.Instance.Dequeue();
 
 
 
 
-           // System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
-           // fsw.Created += (x, y) => {
-           //     Console.WriteLine("Created " + y.FullPath);
-           // };
-           // fsw.Filter = "*.txt";
-           // fsw.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-           // fsw.EnableRaisingEvents = true;
+            // System.IO.FileSystemWatcher fsw = new System.IO.FileSystemWatcher(@"D:\XOX");
+            // fsw.Created += (x, y) => {
+            //     Console.WriteLine("Created " + y.FullPath);
+            // };
+            // fsw.Filter = "*.txt";
+            // fsw.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+            // fsw.EnableRaisingEvents = true;
 
-           // Console.ReadLine();
+            // Console.ReadLine();
 
 
             //MediaRack.Core.Data.Remote.MYSQLRemoteStorage s = new MediaRack.Core.Data.Remote.MYSQLRemoteStorage();
@@ -81,7 +127,7 @@ namespace Testings
             ////set.WatchDir.Add(@"C:\D");
             ////u.Settings.ConflictProtocol = ConflictResolution.KeepRemote;
             ////s.UpdateUserSettings(u.Settings);
-            
+
             var dao = new MediaEntryDAO();
 
             var finfo = new FileMetaInfo()
@@ -96,7 +142,7 @@ namespace Testings
             };
             finfo.QualityTags.Add(MediaQuality.BluRayRip);
             finfo.QualityTags.Add(MediaQuality.x264);
-            finfo.QualityTags.Add(MediaQuality.ACC);
+            finfo.QualityTags.Add(MediaQuality.AAC);
             finfo.QualityTags.Add(MediaQuality.MKV);
             finfo.QualityTags.Add(MediaQuality.HD1080P);
             finfo.QualityTags.Add(MediaQuality.Audio);

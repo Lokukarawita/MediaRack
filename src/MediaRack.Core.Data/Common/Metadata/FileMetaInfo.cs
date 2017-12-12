@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,9 +22,9 @@ namespace MediaRack.Core.Data.Common.Metadata
         [JsonProperty("subtitles")]
         public List<SubtitleMetaInfo> Subtitles { get; set; }
 
-        [JsonProperty("quality")]
+        [JsonProperty("quality", ItemConverterType = typeof(StringEnumConverter))]
         public HashSet<MediaQuality> QualityTags { get; set; }
-        
+
         [JsonProperty("dimensions")]
         public Size Dimensions { get; set; }
 
@@ -32,13 +33,13 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("absPath")]
         public string AbsolutePath { get; set; }
-        
+
         [JsonProperty("rootRPath")]
         public string RootRelativePath { get; set; }
-        
+
         [JsonProperty("root")]
         public string Root { get; set; }
-        
+
         [JsonProperty("pcName")]
         public string PcName { get; set; }
     }
