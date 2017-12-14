@@ -36,7 +36,7 @@ namespace MediaRack.Core.Data.Local
             dao = new FileQueueDAO();
         }
 
-        public void AddFile(string path)
+        public void AddFile(string path, string folderStructureSeq = null)
         {
             var fileInfo = new System.IO.FileInfo(path);
             var hash = HashUtil.HashFile(path);
@@ -48,7 +48,8 @@ namespace MediaRack.Core.Data.Local
                     MD5 = hash,
                     ProcessStatus = LocalFileProcessState.New,
                     Added = DateTime.UtcNow,
-                    FileSize = fileInfo.Length
+                    FileSize = fileInfo.Length,
+                    FolderPattern = folderStructureSeq
                 };
                 lock (lockDao)
                 {
@@ -95,6 +96,22 @@ namespace MediaRack.Core.Data.Local
                         elem.ProcessStatus = LocalFileProcessState.Processed;
                         dao.Update(elem);
                     }
+                }
+            }
+        }
+
+        public void ReleaseFile(int id, LocalFileProcessState state)
+        {
+            lock (lockDao)
+            {
+                var tryCount = ConfigKeys.KEY_LOCALFILE_MAXTRYCOUNT.GetConfigValue<int>(5);
+                var elem = dao.Get(x => x.FileId == id).FirstOrDefault();
+                if (elem != null)
+                {
+                    elem.ProcessStatus = state;
+                    elem.TryCount = tryCount;
+
+                    dao.Update(elem);
                 }
             }
         }

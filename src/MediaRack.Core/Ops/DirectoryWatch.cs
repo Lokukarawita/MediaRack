@@ -58,7 +58,7 @@ namespace MediaRack.Core.Ops
                     {
                         try
                         {
-                            Core.Data.Local.LocalFileQueue.Instance.AddFile(x);
+                            Core.Data.Local.LocalFileQueue.Instance.AddFile(x, DirectoryInfo.FolderStructureSeq);
                             log.DebugFormat("DIR_WATCH: File added {0}", x);
                         }
                         catch (Exception ex)

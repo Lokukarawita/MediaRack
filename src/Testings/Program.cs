@@ -9,6 +9,7 @@ using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Local.DAO;
 using MediaRack.Core.Data.Remote;
+using MediaRack.Core.Util.Patterns;
 using System.Text.RegularExpressions;
 
 namespace Testings
@@ -53,31 +54,48 @@ namespace Testings
         {
             
 
-            var ptrn = @"|movie_name| (|year|) [|quality|]";
-            var str = @"MY MOVIE (2013) [720p]";
+            var ptrn = @"|moviename| (|year|) [|quality|]";
+            var str = @"MY MOVIE (2013)\ddd.mkv".ExtractPathData(ptrn);
+
+
+
+
             //Regex r = new Regex(@"[^a-zA-Z-0-9_|\s]+");
             //var m = r.Matches(str);
 
-            var data = new List<string>();
-            StringBuilder srb = new StringBuilder();
+            //var data = new List<string>();
+            //StringBuilder srb = new StringBuilder();
 
-            foreach (var item in str)
-            {
-                if (Regex.IsMatch(item.ToString(), @"[^a-z0-9_\s|]+", RegexOptions.IgnoreCase)) {
+            //foreach (var item in str)
+            //{
+            //    if (Regex.IsMatch(item.ToString(), @"[^a-z0-9_\s|]+", RegexOptions.IgnoreCase))
+            //    {
 
-                    var curV = srb.ToString().Trim();
-                    if (!string.IsNullOrWhiteSpace(curV))
-                        data.Add(curV);
-                    srb.Clear();
-                }
-                else
-                {
-                    srb.Append(item);
-                }
-            }
+            //        //var curV = srb.ToString().Trim();
+            //        //if (!string.IsNullOrWhiteSpace(curV))
+            //        //    data.Add(curV);
+            //        //srb.Clear();
 
-            var mat = Regex.Matches(ptrn, @"[a-z0-9_|]+", RegexOptions.IgnoreCase);
+            //        if (ptrn.IndexOf(item) > -1) {
 
+            //            var cur = srb.ToString().Trim();
+            //            if (!string.IsNullOrWhiteSpace(cur))
+            //                    data.Add(cur);
+            //            srb.Clear();
+            //        }
+
+
+
+
+            //    }
+            //    else
+            //    {
+            //        srb.Append(item);
+            //    }
+            //}
+
+            //var mat = Regex.Matches(ptrn, @"[a-z0-9|]+", RegexOptions.IgnoreCase);
+            
 
             Console.ReadLine();
 

@@ -20,6 +20,7 @@ namespace MediaRack.Core.Data.Local.ORM.Mapping
             Map(x => x.Added);
             Map(x => x.ProcessStatus).CustomType<Data.Common.LocalFileProcessState>().Column("Status");
             Map(x => x.TryCount).Default("0");
+            Map(x => x.FolderPattern);
         }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="Enums\EnumExtentions.cs" />
     <Compile Include="Hash\HashUtil.cs" />
     <Compile Include="Net\NetworkHelper.cs" />
+    <Compile Include="Patterns\PatternDataExtrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

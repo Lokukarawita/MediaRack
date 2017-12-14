@@ -87,6 +87,10 @@
       <Project>{72331a88-5f44-44dc-b5ab-b34bc250f725}</Project>
       <Name>MediaRack.Core.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MediaRack.Core.Util\MediaRack.Core.Util.csproj">
+      <Project>{963e7436-377e-45cb-a84b-5dc7c615e994}</Project>
+      <Name>MediaRack.Core.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MediaRack.Core\MediaRack.Core.csproj">
       <Project>{672e2232-a05c-4914-9255-c73d20452765}</Project>
       <Name>MediaRack.Core</Name>
