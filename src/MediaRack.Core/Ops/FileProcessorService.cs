@@ -45,7 +45,8 @@ namespace MediaRack.Core.Ops
                     string d_moviename = string.Empty;
                     int d_movieyear = default(int);
                     WatTmdb.V3.MovieResult d_serchResult = null;
-                    WatTmdb.V3.TmdbMovie d_movie = null;
+                    MediaRack.Core.Data.Common.MediaEntry d_localEntry = null;
+                    WatTmdb.V3.TmdbMovie d_tmdbmovie = null;
 
                     //Pattern extraction
                     if (!string.IsNullOrWhiteSpace(file.FolderPattern))
@@ -102,7 +103,33 @@ namespace MediaRack.Core.Ops
                         Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, Data.Common.LocalFileProcessState.Error);
                     }
 
-                    
+                    //Get Movie info
+                    if (d_serchResult != null)
+                    {
+                        LocalDataStore store = new LocalDataStore();
+                        d_localEntry = store.GetByTmdbId(d_serchResult.id);
+
+                        if (d_localEntry == null)
+                        {
+                            d_tmdbmovie = TmdbClient.Tmdb.GetMovieInfo(d_serchResult.id);
+                        }
+                    }
+
+                    //Error check
+                    if (d_localEntry == null && d_tmdbmovie == null)
+                    {
+                        Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, Data.Common.LocalFileProcessState.Error);
+                    }
+
+
+                    if (d_localEntry != null)
+                    {
+
+                    }
+                    else if (d_tmdbmovie != null)
+                    {
+
+                    }
                 }
             }
             catch (Exception)
