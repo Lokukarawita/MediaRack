@@ -16,5 +16,6 @@ namespace MediaRack.Core.Data.Common
         public virtual LocalFileProcessState ProcessStatus { get; set; }
         public virtual int TryCount { get; set; }
         public virtual string FolderPattern { get; set; }
+        public virtual MediaClassification ContentType { get; set; }
     }
 }

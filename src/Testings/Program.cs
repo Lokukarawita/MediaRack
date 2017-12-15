@@ -52,7 +52,21 @@ namespace Testings
 
         static void Main(string[] args)
         {
-            
+
+
+
+            MediaInfoDotNet.MediaFile mf = new MediaInfoDotNet.MediaFile(@"D:\I files\My\MV\Damith\The Hunger Games Mockingjay - Part 2 (2015) [YTS.AG]\The.Hunger.Games.Mockingjay.-.Part.2.2015.720p.BluRay.x264-[YTS.AG].mp4");
+
+
+
+
+
+
+
+
+
+
+
 
             var ptrn = @"|moviename| (|year|) [|quality|]";
             var str = @"MY MOVIE (2013)\ddd.mkv".ExtractPathData(ptrn);

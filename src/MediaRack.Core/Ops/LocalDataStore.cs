@@ -13,12 +13,13 @@ namespace MediaRack.Core.Ops
         public MediaEntry GetByTmdbId(int id)
         {
             var dao = new MediaEntryDAO();
+
             using (var session = dao.GetSession())
             {
                 var qry = dao.GetQuery(session);
                 var item = qry.FirstOrDefault(x => x.IDInfo != null && x.IDInfo.TmdbID == id);
                 return item;
-            } 
+            }
         }
     }
 }

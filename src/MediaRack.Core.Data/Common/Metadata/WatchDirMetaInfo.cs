@@ -13,6 +13,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         public WatchDirMetaInfo()
         {
             FolderStructureSeq = ConfigKeys.KEY_FILPROC_DEFAULTFOLDERSEQ.GetConfigValue<string>(@"|movie_name| (|year|) [|quality|]\|filename_unformatted|");
+            FolderContentType = MediaClassification.Movie;
         }
 
         [JsonProperty("pcName")]
@@ -23,5 +24,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         public DateTime LastChecked { get; set; }
         [JsonProperty("fldrStrucSeq")]
         public string FolderStructureSeq { get; set; }
+        [JsonProperty("fldrContentType")]
+        public MediaClassification FolderContentType { get; set; }
     }
 }

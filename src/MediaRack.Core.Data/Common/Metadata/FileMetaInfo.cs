@@ -42,5 +42,8 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("pcName")]
         public string PcName { get; set; }
+
+        [JsonProperty("md5")]
+        public string MD5Hash { get; set; }
     }
 }
