@@ -13,7 +13,8 @@ namespace MediaRack.Core.Data.Common.Metadata
         public FileMetaInfo()
         {
             Subtitles = new List<SubtitleMetaInfo>();
-            QualityTags = new HashSet<MediaQuality>();
+            QualityTags = new List<MediaQuality>();
+            Tracks = new List<FileTrackMetaInfo>();
         }
 
         [JsonProperty("group")]
@@ -22,8 +23,11 @@ namespace MediaRack.Core.Data.Common.Metadata
         [JsonProperty("subtitles")]
         public List<SubtitleMetaInfo> Subtitles { get; set; }
 
+        [JsonProperty("mediaTracks")]
+        public List<FileTrackMetaInfo> Tracks { get; set; }
+
         [JsonProperty("quality", ItemConverterType = typeof(StringEnumConverter))]
-        public HashSet<MediaQuality> QualityTags { get; set; }
+        public List<MediaQuality> QualityTags { get; set; }
 
         [JsonProperty("dimensions")]
         public Size Dimensions { get; set; }
@@ -45,5 +49,8 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("md5")]
         public string MD5Hash { get; set; }
+
+        [JsonProperty("diskNumber")]
+        public string DiskNumber { get; set; }
     }
 }

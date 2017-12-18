@@ -14,14 +14,20 @@ namespace MediaRack.Core.Data.Common
         //--- Video ---
         [Description("x264")]
         x264,
-        [Description("HEVC")]
+        [Description("x265")]
         x265,
-        [Description("Xvid/Divx")]
-        XvidDivX,
+        [Description("Xvid")]
+        Xvid,
+        [Description("DivX")]
+        DivX,
         [Description("WMV")]
         WMV,
         [Description("VP6/7/8/9")]
         VP,
+        [Description("AVC")]
+        AVC,
+        [Description("HEVC")]
+        HEVC,
 
         //--- Audio ---
         [Description("MP3")]
@@ -42,12 +48,16 @@ namespace MediaRack.Core.Data.Common
         MP4,
         [Description("AVI")]
         AVI,
-        [Description("Mkv")]
+        [Description("MKV")]
         MKV,
         [Description("WebM")]
         WEBM,
         [Description("FLV")]
         FLV,
+        [Description("QT")]
+        QT,
+        [Description("MOV")]
+        MOV,
 
         //--- Rips ---
         [Description("WebRip")]
@@ -62,10 +72,10 @@ namespace MediaRack.Core.Data.Common
         HD720P,
         [Description("1080p")]
         HD1080P,
+        [Description("480p")]
+        HD480P,
         [Description("4k")]
         HD4K,
-        [Description("HDTV")]
-        HDTV,
         
         //--- Defaults ---
         [Description("Audio")]

@@ -55,7 +55,7 @@ namespace Testings
 
 
 
-            MediaInfoDotNet.MediaFile mf = new MediaInfoDotNet.MediaFile(@"D:\I files\My\MV\Damith\The Hunger Games Mockingjay - Part 2 (2015) [YTS.AG]\The.Hunger.Games.Mockingjay.-.Part.2.2015.720p.BluRay.x264-[YTS.AG].mp4");
+            MediaInfoDotNet.MediaFile mf = new MediaInfoDotNet.MediaFile(@"D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\out_mp4.mp4");
 
 
 
