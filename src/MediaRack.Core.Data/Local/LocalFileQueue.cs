@@ -36,7 +36,7 @@ namespace MediaRack.Core.Data.Local
             dao = new FileQueueDAO();
         }
 
-        public void AddFile(string path, string folderStructureSeq = null, MediaClassification contentType =  MediaClassification.Movie)
+        public void AddFile(string path, string folderStructureSeq = null, MediaClassification contentType = MediaClassification.Movie, bool addToFavorite = false, string setBookmark = null)
         {
             var fileInfo = new System.IO.FileInfo(path);
             var hash = HashUtil.HashFile(path);
@@ -50,7 +50,9 @@ namespace MediaRack.Core.Data.Local
                     Added = DateTime.UtcNow,
                     FileSize = fileInfo.Length,
                     FolderPattern = folderStructureSeq,
-                    ContentType = contentType
+                    ContentType = contentType,
+                    AutoBookmark = setBookmark,
+                    AddToFavorite = addToFavorite
                 };
                 lock (lockDao)
                 {

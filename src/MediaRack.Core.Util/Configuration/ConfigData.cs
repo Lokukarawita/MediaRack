@@ -8,7 +8,7 @@ namespace MediaRack.Core.Util.Configuration
 {
     public static class ConfigData
     {
-        public static readonly string[] COMPATIBLE_MEDIA_TYPES = new string[]{ 
+        public static readonly string[] COMPATIBLE_VIDEOCONTAINER_TYPES = new string[]{ 
             ".3gp",
             ".3g2",
             ".asf",
@@ -38,6 +38,14 @@ namespace MediaRack.Core.Util.Configuration
             ".webm",
             ".wmv"
         };
+        public static readonly string[] COMPATIBLE_EXTERNAL_SUBFILES = new string[] {
+            ".srt",
+            ".smt",
+            ".ssa",
+            ".ass",
+            ".vtt"
+        };
+
         public static readonly string[] KNOWN_TAG_TYPES = new string[]
         {
             "|movie_name|", "|year|", "|quality|", "|filename_unformatted|"

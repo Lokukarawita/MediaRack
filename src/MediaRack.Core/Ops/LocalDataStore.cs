@@ -21,5 +21,22 @@ namespace MediaRack.Core.Ops
                 return item;
             }
         }
+
+        public MediaEntry AddMediaEntry(MediaEntry entry)
+        {
+            var dao = new MediaEntryDAO();
+            using (var session = dao.GetSession())
+            {
+                return dao.Add(entry);
+            }
+        }
+        public MediaEntry UpdateMediaEntry(MediaEntry entry)
+        {
+            var dao = new MediaEntryDAO();
+            using (var session = dao.GetSession())
+            {
+                return dao.Update(entry);
+            }
+        }
     }
 }

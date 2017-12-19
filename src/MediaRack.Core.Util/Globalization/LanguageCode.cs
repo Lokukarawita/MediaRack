@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Util.Configuration
+namespace MediaRack.Core.Util.Globalization
 {
     public sealed class LanguageCode
     {

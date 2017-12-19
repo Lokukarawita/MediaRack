@@ -17,5 +17,7 @@ namespace MediaRack.Core.Data.Common
         public virtual int TryCount { get; set; }
         public virtual string FolderPattern { get; set; }
         public virtual MediaClassification ContentType { get; set; }
+        public virtual bool AddToFavorite { get; set; }
+        public virtual string AutoBookmark { get; set; }
     }
 }

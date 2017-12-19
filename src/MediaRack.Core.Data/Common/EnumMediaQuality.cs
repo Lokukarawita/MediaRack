@@ -28,6 +28,10 @@ namespace MediaRack.Core.Data.Common
         AVC,
         [Description("HEVC")]
         HEVC,
+        [Description("MP4V")]
+        MP4V,
+        [Description("MPEG-2")]
+        MPEG2,
 
         //--- Audio ---
         [Description("MP3")]
@@ -58,6 +62,8 @@ namespace MediaRack.Core.Data.Common
         QT,
         [Description("MOV")]
         MOV,
+        [Description("VOB")]
+        VOB,
 
         //--- Rips ---
         [Description("WebRip")]

@@ -9,8 +9,9 @@ using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Local.DAO;
 using MediaRack.Core.Data.Remote;
-using MediaRack.Core.Util.Patterns;
+using MediaRack.Core.Util.Strings;
 using System.Text.RegularExpressions;
+using MediaRack.Core.Api.TMDDb;
 
 namespace Testings
 {
@@ -53,9 +54,12 @@ namespace Testings
         static void Main(string[] args)
         {
 
+           var x  = TmdbClient.Tmdb.GetMovieTrailers(100);
+
+           // x.youtube[0].n
 
 
-            MediaInfoDotNet.MediaFile mf = new MediaInfoDotNet.MediaFile(@"D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\out_mp4.mp4");
+            //MediaInfoDotNet.MediaFile mf = new MediaInfoDotNet.MediaFile(@"D:\Temp\ffmpeg-20170503-a75ef15-win64-static\bin\out_mp4.mp4");
 
 
 

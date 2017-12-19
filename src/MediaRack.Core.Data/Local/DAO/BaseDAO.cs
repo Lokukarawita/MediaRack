@@ -48,7 +48,7 @@ namespace MediaRack.Core.Data.Local.DAO
             return session.Query<T>();
         }
 
-        public virtual void Add(T item)
+        public virtual T Add(T item)
         {
             using (var ses = GetSession())
             {
@@ -57,6 +57,7 @@ namespace MediaRack.Core.Data.Local.DAO
                 {
                     ses.SaveOrUpdate(item);
                     trans.Commit();
+                    return item;
                 }
                 catch (Exception)
                 {
@@ -67,7 +68,7 @@ namespace MediaRack.Core.Data.Local.DAO
             }
         }
 
-        public virtual void Update(T item)
+        public virtual T Update(T item)
         {
             using (var ses = GetSession())
             {
@@ -76,6 +77,7 @@ namespace MediaRack.Core.Data.Local.DAO
                 {
                     ses.Update(item);
                     trans.Commit();
+                    return item;
                 }
                 catch (Exception)
                 {

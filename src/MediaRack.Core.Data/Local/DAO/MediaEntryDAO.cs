@@ -9,18 +9,18 @@ namespace MediaRack.Core.Data.Local.DAO
 {
     public class MediaEntryDAO : BaseDAO<MediaEntry, int>, ISyncedControlDTO<MediaEntry>
     {
-        public override void Add(MediaEntry item)
+        public override MediaEntry Add(MediaEntry item)
         {
             item.LocalStatus = LocalSyncStatus.NEW;
             item.Timestamp = DateTime.UtcNow;
-            base.Add(item);
+            return base.Add(item);
         }
 
-        public override void Update(MediaEntry item)
+        public override MediaEntry Update(MediaEntry item)
         {
             item.LocalStatus = LocalSyncStatus.CHANGED;
             item.Timestamp = DateTime.UtcNow;
-            base.Update(item);
+            return base.Update(item);
         }
 
         public void MarkForDelete(MediaEntry entity)

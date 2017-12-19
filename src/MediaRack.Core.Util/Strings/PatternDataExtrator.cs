@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MediaRack.Core.Util.Patterns
+namespace MediaRack.Core.Util.Strings
 {
     public static class PatternDataExtrator
     {

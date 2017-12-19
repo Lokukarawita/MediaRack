@@ -52,5 +52,8 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("diskNumber")]
         public string DiskNumber { get; set; }
+        
+        [JsonProperty("isDuplicate")]
+        public bool Duplicate { get; set; }
     }
 }

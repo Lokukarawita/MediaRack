@@ -22,6 +22,8 @@ namespace MediaRack.Core.Data.Local.ORM.Mapping
             Map(x => x.TryCount).Default("0");
             Map(x => x.FolderPattern);
             Map(x => x.ContentType).CustomType<GenericEnumMapper<MediaClassification>>();
+            Map(x => x.AddToFavorite);
+            Map(x => x.AutoBookmark);
         }
     }
 }

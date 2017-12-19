@@ -52,12 +52,14 @@
     <Compile Include="Configuration\ConfigData.cs" />
     <Compile Include="Configuration\ConfigExtentions.cs" />
     <Compile Include="Configuration\ConfigKeys.cs" />
-    <Compile Include="Configuration\LanguageCode.cs" />
+    <Compile Include="Globalization\LanguageCode.cs" />
     <Compile Include="Enums\EnumExtentions.cs" />
     <Compile Include="Hash\HashUtil.cs" />
+    <Compile Include="IO\FileSystem.cs" />
     <Compile Include="Net\NetworkHelper.cs" />
-    <Compile Include="Patterns\PatternDataExtrator.cs" />
+    <Compile Include="Strings\PatternDataExtrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strings\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

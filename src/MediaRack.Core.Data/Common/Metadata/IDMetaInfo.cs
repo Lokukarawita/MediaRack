@@ -8,6 +8,11 @@ namespace MediaRack.Core.Data.Common.Metadata
 {
     public class IDMetaInfo : MetaInfo
     {
+        public IDMetaInfo()
+        {
+            this.TrailerInfo = new List<TrailerMetaInfo>();
+        }
+
         [JsonProperty("tmdb")]
         public int TmdbID { get; set; }
         
@@ -16,8 +21,8 @@ namespace MediaRack.Core.Data.Common.Metadata
         
         [JsonProperty("imdb")]
         public string ImdbID { get; set; }
-        
-        [JsonProperty("youtube")]
-        public string YoutubeID { get; set; }
+
+        [JsonProperty("trailers")]
+        public List<TrailerMetaInfo> TrailerInfo { get; set; }
     }
 }

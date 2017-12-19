@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using MediaRack.Core.Util.Configuration;
-using MediaRack.Core.Util.Patterns;
+using MediaRack.Core.Util.Strings;
 using MediaRack.Core.Api.TMDDb;
 using MediaRack.Core.Api.Mapping;
 using System.IO;
 using MediaRack.Core.Data.Common;
+using MediaRack.Core.Util.Globalization;
 
 namespace MediaRack.Core.Ops
 {
@@ -148,7 +149,26 @@ namespace MediaRack.Core.Ops
 
             if (d_localEntry != null)
             {
+                //File info
+                var fileInfo = FillFileMetaInfo(file.FilePath, file.MD5);
+                if (d_localEntry.FileInfo != null)
+                {
+                    var exiting_file = d_localEntry.FileInfo.Files.FirstOrDefault(x => x.MD5Hash == file.MD5);
+                    if (exiting_file != null)
+                    {
+                        fileInfo.Duplicate = true;
+                    }
 
+                    d_localEntry.FileInfo.Files.Add(fileInfo);
+                }
+                else
+                {
+                    d_localEntry.FileInfo = new Data.Common.Metadata.FileCollectionMetaInfo();
+                    d_localEntry.FileInfo.Files.Add(fileInfo);
+                }
+                
+                var data_store = new LocalDataStore();
+                data_store.UpdateMediaEntry(d_localEntry);
             }
             else if (d_tmdbmovie != null)
             {
@@ -161,12 +181,45 @@ namespace MediaRack.Core.Ops
                 cast = d_tmdbcast.crew != null ? cast.Concat(d_tmdbcast.crew.ToPerson()).ToList() : cast;
                 composition.Cast = cast;
 
-                var fileInfo = new Data.Common.Metadata.FileMetaInfo();
-            }
+                //File info
+                var fileInfo = FillFileMetaInfo(file.FilePath, file.MD5);
 
+                //Id info
+                var idInfo = new Data.Common.Metadata.IDMetaInfo() { TmdbID = d_tmdbmovie.id, ImdbID = d_tmdbmovie.imdb_id };
+
+                //Trailers
+                try
+                {
+                    var trailers = TmdbClient.Tmdb.GetMovieTrailers(d_tmdbmovie.id);
+                    if (trailers != null && trailers.youtube != null)
+                    {
+                        foreach (var tr in trailers.youtube)
+                        {
+                            idInfo.TrailerInfo.Add(new Data.Common.Metadata.TrailerMetaInfo() { ID = tr.source, Title = tr.name });
+                        }
+                    }
+                }
+                catch (Exception) { }
+
+                //Rack entry
+                MediaEntry newwentry = new MediaEntry()
+                {
+                    IDInfo = idInfo,
+                    Classification = file.ContentType,
+                    LocalStatus = LocalSyncStatus.NEW,
+                    Timestamp = DateTime.UtcNow,
+                    CompositionInfo = composition,
+                    Favorite = file.AddToFavorite,
+                    Bookmark = file.AutoBookmark,
+                    FileInfo = new Data.Common.Metadata.FileCollectionMetaInfo()
+                };
+                newwentry.FileInfo.Files.Add(fileInfo);
+                var data_store = new LocalDataStore();
+                data_store.AddMediaEntry(newwentry);
+            }
         }
 
-        private void FillFileMetaInfo(string path, string md5)
+        private MediaRack.Core.Data.Common.Metadata.FileMetaInfo FillFileMetaInfo(string path, string md5)
         {
             var fileInfo = new Data.Common.Metadata.FileMetaInfo();
 
@@ -199,7 +252,7 @@ namespace MediaRack.Core.Ops
                 }
 
                 //Video format
-                var vformat = IdentifyVideoFormat(d_mediaInfo.Video[0].Format, d_mediaInfo.Video[0].FormatInfo, d_mediaInfo.Video[0].CodecId);
+                var vformat = IdentifyVideoFormat(d_mediaInfo.Video[0]);
                 qualityTags.AddRange(vformat);
 
                 //Track info
@@ -213,7 +266,7 @@ namespace MediaRack.Core.Ops
             if (qualityTags.Contains(MediaQuality.Audio))
             {
                 //Audio format
-                var aformat = IdentifyVideoFormat(d_mediaInfo.Audio[0].Format, d_mediaInfo.Audio[0].FormatInfo, d_mediaInfo.Audio[0].CodecId);
+                var aformat = IdentifyAudioFormat(d_mediaInfo.Audio[0]);
                 qualityTags.AddRange(aformat);
 
                 //Track info
@@ -223,32 +276,10 @@ namespace MediaRack.Core.Ops
                 }
             }
 
-            //Media info - Subtitles
-            try
-            {
-                //Embedded
-                if (d_mediaInfo.Text != null && d_mediaInfo.Text.Count > 0)
-                {
-                    foreach (var sdata in d_mediaInfo.Text)
-                    {
-                        if (!string.IsNullOrWhiteSpace(sdata.Format) && sdata.Format.ToLower().Contains("timed"))
-                        {
-                            var lang = Util.Configuration.LanguageCode.FindCode(sdata.Language);
-                            var lstr = lang != null ? lang.EnglishName : defaultCode.EnglishName;
-                            fileInfo.Subtitles.Add(new Data.Common.Metadata.SubtitleMetaInfo() { IsEmbedded = true, Language = lstr });
-                        }
-                    }
-                }
-
-                //Folder
-
-            }
-            catch (Exception) { }
-
             //Media info - Container
             try
             {
-                var container = IdentifyContainer(d_mediaInfo.General.Format, d_mediaInfo.General.FormatInfo, d_mediaInfo.General.codecId);
+                var container = IdentifyContainer(d_mediaInfo.General.Format, d_mediaInfo.General.FormatInfo, d_mediaInfo);
                 if (container.HasValue)
                 {
                     qualityTags.Add(container.Value);
@@ -262,6 +293,36 @@ namespace MediaRack.Core.Ops
             catch (Exception) { }
 
             fileInfo.QualityTags.AddRange(qualityTags);
+
+            //Media info - Subtitles
+
+            //Embedded
+            if (d_mediaInfo.Text != null && d_mediaInfo.Text.Count > 0)
+            {
+                foreach (var sdata in d_mediaInfo.Text)
+                {
+                    try
+                    {
+                        if (!string.IsNullOrWhiteSpace(sdata.Format) && sdata.Format.ToLower().Contains("timed"))
+                        {
+                            var lang = Util.Globalization.LanguageCode.FindCode(sdata.Language);
+                            var lstr = lang != null ? lang.EnglishName : defaultCode.EnglishName;
+                            fileInfo.Subtitles.Add(new Data.Common.Metadata.SubtitleMetaInfo() { IsEmbedded = true, Language = lstr });
+                        }
+                    }
+                    catch (Exception) { continue; }
+                }
+            }
+
+            //Folder
+            try
+            {
+                var found_subs = FindSubtitleFiles(path);
+                found_subs.ForEach(x => { fileInfo.Subtitles.Add(x); });
+            }
+            catch (Exception) { }
+
+            return fileInfo;
         }
 
 
@@ -272,94 +333,105 @@ namespace MediaRack.Core.Ops
             if (height > 480 && width >= 640) return MediaQuality.HD720P;
             return MediaQuality.HD480P;
         }
-        private List<MediaQuality> IdentifyVideoFormat(string format, string longName, string mediaInfoid = null)
+
+        private List<MediaQuality> IdentifyVideoFormat(MediaInfoDotNet.Models.VideoStream videoInfo)
         {
-            format = string.IsNullOrWhiteSpace(format) ? string.Empty : format;
-            longName = string.IsNullOrWhiteSpace(longName) ? string.Empty : longName;
-            mediaInfoid = string.IsNullOrWhiteSpace(mediaInfoid) ? string.Empty : mediaInfoid;
+            var format = string.IsNullOrWhiteSpace(videoInfo.Format) ? string.Empty : videoInfo.Format.ToLower();
+            var longName = string.IsNullOrWhiteSpace(videoInfo.FormatInfo) ? string.Empty : videoInfo.FormatInfo.ToLower();
+            var codecId = string.IsNullOrWhiteSpace(videoInfo.CodecId) ? string.Empty : videoInfo.CodecId.ToLower();
 
             var rvalue = new List<MediaQuality>();
 
-            if (format.ToLower() == "avc" || format.ToLower().Contains("264") || longName.ToLower().Contains("264"))
+            if (StringUtils.Contains(format, "mpeg-4 visual"))
+            {
+                //MP4 videos layer
+                rvalue.Add(MediaQuality.MP4V);
+
+                if (StringUtils.Contains(videoInfo.CodecId, "dv"))
+                {
+                    rvalue.Add(MediaQuality.DivX);
+                }
+                else if (StringUtils.Contains(videoInfo.CodecId, "xvid"))
+                {
+                    rvalue.Add(MediaQuality.Xvid);
+                }
+            }
+            else if (StringUtils.Contains(format, "mpeg video"))
+            {
+                if (StringUtils.Contains(videoInfo.FormatVersion, "version 2"))
+                {
+                    rvalue.Add(MediaQuality.MPEG2);
+                }
+            }
+            else if (StringUtils.Contains(format, "vp") && (StringUtils.Contains(format, "6") || StringUtils.Contains(format, "7") || StringUtils.Contains(format, "8")))
+            {
+                rvalue.Add(MediaQuality.VP);
+            }
+            else if (StringUtils.Contains(format, "avc"))
             {
                 rvalue.Add(MediaQuality.AVC);
                 rvalue.Add(MediaQuality.x264);
             }
-            if (format.ToLower() == "hevc" || format.ToLower().Contains("265") || longName.ToLower().Contains("265"))
+            else if (StringUtils.Contains(format, "hevc"))
             {
                 rvalue.Add(MediaQuality.HEVC);
                 rvalue.Add(MediaQuality.x265);
             }
-            if (format.ToLower().Contains("WMV") || longName.ToLower().Contains("WMV"))
-            {
-                rvalue.Add(MediaQuality.WMV);
-            }
-            if (format.ToLower().Contains("xvid") || longName.ToLower().Contains("xvid"))
-            {
-                rvalue.Add(MediaQuality.Xvid);
-            }
-            if (format.ToLower().Contains("divx") || longName.ToLower().Contains("divx"))
-            {
-                rvalue.Add(MediaQuality.DivX);
-            }
-            if (format.ToLower().Contains("vp") || longName.ToLower().Contains("vp"))
-            {
-                rvalue.Add(MediaQuality.VP);
-            }
-
             return rvalue;
         }
-        private List<MediaQuality> IdentifyAudioFormat(string format, string longName, string mediaInfoid = null)
+
+        private List<MediaQuality> IdentifyAudioFormat(MediaInfoDotNet.Models.AudioStream audioStream)
         {
-            format = string.IsNullOrWhiteSpace(format) ? string.Empty : format;
-            longName = string.IsNullOrWhiteSpace(longName) ? string.Empty : longName;
-            mediaInfoid = string.IsNullOrWhiteSpace(mediaInfoid) ? string.Empty : mediaInfoid;
+            var format = string.IsNullOrWhiteSpace(audioStream.Format) ? string.Empty : audioStream.Format.ToLower();
+            var longName = string.IsNullOrWhiteSpace(audioStream.FormatInfo) ? string.Empty : audioStream.FormatInfo.ToLower();
 
             var rvalue = new List<MediaQuality>();
-            if (format.ToLower().Contains("mpeg") || longName.ToLower().Contains("mpeg"))
+            if (format.Contains("mpeg") || longName.Contains("mpeg"))
             {
                 rvalue.Add(MediaQuality.MP3);
             }
-            if (format.ToLower().Contains("aac") || longName.ToLower().Contains("aac"))
+            if (format.Contains("aac") || longName.Contains("aac"))
             {
                 rvalue.Add(MediaQuality.AAC);
             }
-            if (format.ToLower().Contains("wma") || longName.ToLower().Contains("wma"))
+            if (format.Contains("wma") || longName.Contains("wma"))
             {
                 rvalue.Add(MediaQuality.WMA);
             }
-            if (format.ToLower().Contains("ac3") || longName.ToLower().Contains("ac3"))
+            if (format.Contains("ac-3") || longName.Contains("audio coding 3"))
             {
-                rvalue.Add(MediaQuality.WMA);
+                rvalue.Add(MediaQuality.AC3);
             }
-            if (format.ToLower().Contains("ogg") || longName.ToLower().Contains("ogg"))
+            if (format.Contains("vorbis") || longName.Contains("vorbis"))
             {
-                rvalue.Add(MediaQuality.WMA);
+                rvalue.Add(MediaQuality.OGG);
             }
-            if (format.ToLower().Contains("wav") || longName.ToLower().Contains("wav"))
+            if (format.Contains("wav") || longName.Contains("wav"))
             {
                 rvalue.Add(MediaQuality.WAV);
             }
-            if (format.ToLower().Contains("pcm") || longName.ToLower().Contains("pcm"))
+            if (format.Contains("pcm") || longName.Contains("pcm"))
             {
                 rvalue.Add(MediaQuality.WAV);
             }
             return rvalue;
         }
-        private MediaQuality? IdentifyContainer(string format, string longName, string mediaInfoId = null)
-        {
-            format = string.IsNullOrWhiteSpace(format) ? string.Empty : format;
-            longName = string.IsNullOrWhiteSpace(longName) ? string.Empty : longName;
-            mediaInfoId = string.IsNullOrWhiteSpace(mediaInfoId) ? string.Empty : mediaInfoId;
 
-            if (format.ToLower().Contains("matroska")) return MediaQuality.MKV;
-            if (format.ToLower().Contains("mpeg-4")) return MediaQuality.MP4;
-            if (format.ToLower().Contains("avi")) return MediaQuality.AVI;
-            if (format.ToLower().Contains("webm")) return MediaQuality.WEBM;
-            if (format.ToLower().Contains("flash")) return MediaQuality.FLV;
-            if (format.ToLower().Contains("quicktime")) return MediaQuality.MOV;
+        private MediaQuality? IdentifyContainer(string format, string longName, MediaInfoDotNet.MediaFile mediaInfo)
+        {
+            format = string.IsNullOrWhiteSpace(format) ? string.Empty : format.ToLower();
+            longName = string.IsNullOrWhiteSpace(longName) ? string.Empty : longName.ToLower();
+
+            if (format.Contains("matroska")) return MediaQuality.MKV;
+            if (format.Contains("mpeg-4")) return MediaQuality.MP4;
+            if (format.Contains("avi")) return MediaQuality.AVI;
+            if (format.Contains("webm")) return MediaQuality.WEBM;
+            if (format.Contains("flash")) return MediaQuality.FLV;
+            if (format.Contains("quicktime")) return MediaQuality.MOV;
+            if (format.Contains("windows")) return MediaQuality.WMV;
             return new MediaQuality?();
         }
+
         private MediaQuality? IdentifyContainer(string path)
         {
             if (path.ToLower().EndsWith("mkv")) return MediaQuality.MKV;
@@ -369,43 +441,78 @@ namespace MediaRack.Core.Ops
             if (path.ToLower().EndsWith("mov")) return MediaQuality.MOV;
             if (path.ToLower().EndsWith("qt")) return MediaQuality.QT;
             if (path.ToLower().EndsWith("webm")) return MediaQuality.WEBM;
+            if (path.ToLower().EndsWith("vob")) return MediaQuality.VOB;
             return new MediaQuality?();
         }
 
-        private Core.Data.Common.Metadata.SubtitleMetaInfo[] FindSubtitleFiles(string path)
+        private List<Core.Data.Common.Metadata.SubtitleMetaInfo> FindSubtitleFiles(string path)
         {
             var subs = new List<MediaRack.Core.Data.Common.Metadata.SubtitleMetaInfo>();
             var filename = Path.GetFileNameWithoutExtension(path);
             var dir = Path.GetDirectoryName(path);
 
+            //Format for SRT, SMI, SSA, ASS, VTT --> Movie_Name (Release Date).[Language_Code].ext
+
             //SRT files
-            foreach (var srtFile in Directory.EnumerateFiles(dir, "*.srt", SearchOption.TopDirectoryOnly))
+            var files_list = Util.IO.FileSystem.ListFiles(dir, SearchOption.TopDirectoryOnly, Util.Configuration.ConfigData.COMPATIBLE_EXTERNAL_SUBFILES);
+            foreach (var srtFile in files_list)
             {
-                var regex = new System.Text.RegularExpressions.Regex(@"[^\.\s_-]+.+(?=\.srt)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-                if (regex.IsMatch(srtFile))
+                var fileName = Path.GetFileNameWithoutExtension(srtFile);
+                var fileNameWithExt = Path.GetFileName(srtFile);
+
+                var splitted = filename.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                if (splitted.Length > 1)
                 {
-                    var fileName = Path.GetFileNameWithoutExtension(srtFile);
-                    var matched = regex.Match(srtFile).Value;
-                    matched = matched.Replace(fileName, "").Trim();
-                    if (!string.IsNullOrWhiteSpace(matched))
-                    {
-                        var lang = Util.Configuration.LanguageCode.FindCode(matched);
-                        var dtitle = lang != null ? lang.EnglishName : defaultCode.EnglishName;
-                        subs.Add(new Data.Common.Metadata.SubtitleMetaInfo() { Filename = Path.GetFileName(srtFile), Language = dtitle, IsEmbedded = false });
-                    }
+                    var langCodeStr = splitted[splitted.Length - 1]; //Last index
+                    var lang = Util.Globalization.LanguageCode.FindCode(langCodeStr);
+                    var dtitle = lang != null ? lang.EnglishName : defaultCode.EnglishName;
+                    subs.Add(new Data.Common.Metadata.SubtitleMetaInfo() { Filename = fileNameWithExt, Language = dtitle, IsEmbedded = false });
+                }
+                else
+                {
+                    subs.Add(new Data.Common.Metadata.SubtitleMetaInfo() { Filename = fileNameWithExt, Language = defaultCode.EnglishName, IsEmbedded = false });
                 }
             }
 
             //VobSub
+            files_list = Util.IO.FileSystem.ListFiles(dir, SearchOption.TopDirectoryOnly, ".idx");
+            foreach (var srtFile in files_list)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(srtFile);
+                var fileNameWithExt = Path.GetFileName(srtFile);
+                var sub_file = Path.Combine(dir, filename, ".sub");
 
-            return subs.ToArray();
+                if (File.Exists(sub_file))
+                {
+                    var splitted = filename.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (splitted.Length > 1)
+                    {
+                        var langCodeStr = splitted[splitted.Length - 1]; //Last index
+                        var lang = Util.Globalization.LanguageCode.FindCode(langCodeStr);
+                        var dtitle = lang != null ? lang.EnglishName : defaultCode.EnglishName;
+                        subs.Add(new Data.Common.Metadata.SubtitleMetaInfo() { Filename = fileNameWithExt, Language = dtitle, IsEmbedded = false });
+                    }
+                    else
+                    {
+                        subs.Add(new Data.Common.Metadata.SubtitleMetaInfo() { Filename = fileNameWithExt, Language = defaultCode.EnglishName, IsEmbedded = false });
+                    }
+                }
+            }
+
+            return subs;
         }
-
-
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            if (this.queueCheck != null)
+            {
+                try
+                {
+                    queueCheck.Stop();
+                    queueCheck.Dispose();
+                }
+                catch (Exception) { }
+            }
         }
     }
 }
