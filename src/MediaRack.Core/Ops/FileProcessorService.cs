@@ -36,6 +36,7 @@ namespace MediaRack.Core.Ops
             log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         }
 
+
         private void queueCheck_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (processing)
@@ -49,7 +50,21 @@ namespace MediaRack.Core.Ops
                 if (file != null)
                 {
                     if (file.ContentType == Data.Common.MediaClassification.Movie || file.ContentType == Data.Common.MediaClassification.RMovie)
-                        ProcessMovieEntry(file);
+                    {
+                        try
+                        {
+                            ProcessMovieEntry(file);
+                            Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, false);
+                        }
+                        catch (Exception)
+                        {
+                            Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, true);
+                        }
+                    }
+                    else
+                    {
+                        //TV shows
+                    }
                 }
             }
             catch (Exception)
@@ -62,6 +77,8 @@ namespace MediaRack.Core.Ops
 
             processing = false;
         }
+
+        //Movie Processing
 
         private void ProcessMovieEntry(MediaRack.Core.Data.Common.LocalFileQueueItem file)
         {
@@ -90,6 +107,7 @@ namespace MediaRack.Core.Ops
                     else
                     {
                         d_movieyear = default(int);
+                        //TODO: formatted file name
                     }
                 }
             }
@@ -103,9 +121,7 @@ namespace MediaRack.Core.Ops
             //Error check
             if (string.IsNullOrWhiteSpace(d_moviename))
             {
-                Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, Data.Common.LocalFileProcessState.Error);
-                processing = false;
-                return;
+                throw new FileProcessingException("Extracted movie name is empty");
             }
 
             //Find movie info
@@ -125,7 +141,7 @@ namespace MediaRack.Core.Ops
             //Error check
             if (d_serchResult == null)
             {
-                Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, Data.Common.LocalFileProcessState.Error);
+                throw new FileProcessingException("TMDB search for '" + d_moviename + "' returned empty results");
             }
 
             //Get Movie info
@@ -143,7 +159,7 @@ namespace MediaRack.Core.Ops
             //Error check
             if (d_localEntry == null && d_tmdbmovie == null)
             {
-                Data.Local.LocalFileQueue.Instance.ReleaseFile(file.FileId, Data.Common.LocalFileProcessState.Error);
+                throw new FileProcessingException("Cannot find a matching media entry for for '" + d_moviename + "' ('" + file.MD5 + "') in local storage or in TMDB");
             }
 
 
@@ -166,7 +182,7 @@ namespace MediaRack.Core.Ops
                     d_localEntry.FileInfo = new Data.Common.Metadata.FileCollectionMetaInfo();
                     d_localEntry.FileInfo.Files.Add(fileInfo);
                 }
-                
+
                 var data_store = new LocalDataStore();
                 data_store.UpdateMediaEntry(d_localEntry);
             }
@@ -219,6 +235,8 @@ namespace MediaRack.Core.Ops
             }
         }
 
+        // Common
+
         private MediaRack.Core.Data.Common.Metadata.FileMetaInfo FillFileMetaInfo(string path, string md5)
         {
             var fileInfo = new Data.Common.Metadata.FileMetaInfo();
@@ -237,7 +255,7 @@ namespace MediaRack.Core.Ops
             if (d_mediaInfo.Audio != null && d_mediaInfo.Audio.Count > 0) qualityTags.Add(MediaQuality.Audio);
             if (d_mediaInfo.Video != null && d_mediaInfo.Video.Count > 0) qualityTags.Add(MediaQuality.Video);
 
-            //Media info - Video
+            //FileInfo - Video
             if (qualityTags.Contains(MediaQuality.Video))
             {
                 //Frame size
@@ -262,7 +280,7 @@ namespace MediaRack.Core.Ops
                 }
             }
 
-            //Media info - Video
+            //FileInfo - Video
             if (qualityTags.Contains(MediaQuality.Audio))
             {
                 //Audio format
@@ -276,7 +294,7 @@ namespace MediaRack.Core.Ops
                 }
             }
 
-            //Media info - Container
+            //FileInfo - Container
             try
             {
                 var container = IdentifyContainer(d_mediaInfo.General.Format, d_mediaInfo.General.FormatInfo, d_mediaInfo);
@@ -294,7 +312,11 @@ namespace MediaRack.Core.Ops
 
             fileInfo.QualityTags.AddRange(qualityTags);
 
-            //Media info - Subtitles
+            //FileInfo - Rip
+            var riptype = IdentifyRip(path);
+            if (riptype.HasValue) fileInfo.QualityTags.Add(riptype.Value);
+
+            //FileInfo - Subtitles
 
             //Embedded
             if (d_mediaInfo.Text != null && d_mediaInfo.Text.Count > 0)
@@ -322,9 +344,9 @@ namespace MediaRack.Core.Ops
             }
             catch (Exception) { }
 
+            //Return value
             return fileInfo;
         }
-
 
         private MediaQuality IdentifyFramesize(int width, int height)
         {
@@ -445,6 +467,18 @@ namespace MediaRack.Core.Ops
             return new MediaQuality?();
         }
 
+        private MediaQuality? IdentifyRip(string path)
+        {
+            if (StringUtils.Contains(path, "web") && StringUtils.Contains(path, "rip"))
+                return MediaQuality.WebRip;
+            if (StringUtils.Contains(path, "dvd") && StringUtils.Contains(path, "rip"))
+                return MediaQuality.WebRip;
+            if (StringUtils.Contains(path, "bluray"))
+                return MediaQuality.WebRip;
+
+            return new MediaQuality?();
+        }
+
         private List<Core.Data.Common.Metadata.SubtitleMetaInfo> FindSubtitleFiles(string path)
         {
             var subs = new List<MediaRack.Core.Data.Common.Metadata.SubtitleMetaInfo>();
@@ -501,6 +535,7 @@ namespace MediaRack.Core.Ops
 
             return subs;
         }
+
 
         public void Dispose()
         {

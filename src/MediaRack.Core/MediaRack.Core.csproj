@@ -91,6 +91,7 @@
     <Compile Include="Api\TMDb\TmdbClient.cs" />
     <Compile Include="Auth\UserManager.cs" />
     <Compile Include="Net\ImageDownloader.cs" />
+    <Compile Include="Ops\FileProcessingException.cs" />
     <Compile Include="Ops\FileProcessorService.cs" />
     <Compile Include="Ops\LocalDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
