@@ -73,7 +73,7 @@ namespace Testings
 
 
             var ptrn = @"|moviename| (|year|) [|quality|]";
-            var str = @"MY MOVIE (2013)\ddd.mkv".ExtractPathData(ptrn);
+            var str = @"MY MOVIE (2013)\ddd.mkv".ExtractDataByFolder(ptrn);
 
 
 

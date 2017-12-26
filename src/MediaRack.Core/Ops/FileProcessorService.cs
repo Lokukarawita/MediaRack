@@ -93,7 +93,7 @@ namespace MediaRack.Core.Ops
             //Pattern extraction
             if (!string.IsNullOrWhiteSpace(file.FolderPattern))
             {
-                var ptrn_data = file.FilePath.ExtractPathData(file.FolderPattern);
+                var ptrn_data = file.FilePath.ExtractDataByFolder(file.FolderPattern);
 
                 if (ptrn_data.Count > 0)
                 {
@@ -104,18 +104,23 @@ namespace MediaRack.Core.Ops
                         var year_str = ptrn_data["|year|"];
                         if (!int.TryParse(year_str, out d_movieyear)) { d_movieyear = default(int); }
                     }
-                    else
-                    {
-                        d_movieyear = default(int);
-                        //TODO: formatted file name
-                    }
                 }
             }
             else
             {
                 //File name extraction
-                d_movieyear = default(int);
-                d_moviename = file.FilePath.ExtractMovieName();
+                var fileName = Path.GetFileNameWithoutExtension(file.FilePath);
+                var extracted = fileName.ExtractDataByFileName();
+
+                d_moviename = extracted["movie_name"];
+                try
+                {
+                    d_movieyear = int.Parse(extracted["movie_year"]);
+                }
+                catch (Exception)
+                {
+                    d_movieyear = default(int);
+                }
             }
 
             //Error check
@@ -182,6 +187,10 @@ namespace MediaRack.Core.Ops
                     d_localEntry.FileInfo = new Data.Common.Metadata.FileCollectionMetaInfo();
                     d_localEntry.FileInfo.Files.Add(fileInfo);
                 }
+
+                //Set the sync status
+                d_localEntry.Timestamp = DateTime.UtcNow;
+                d_localEntry.LocalStatus = LocalSyncStatus.CHANGED;
 
                 var data_store = new LocalDataStore();
                 data_store.UpdateMediaEntry(d_localEntry);
