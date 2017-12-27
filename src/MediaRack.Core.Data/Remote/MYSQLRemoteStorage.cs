@@ -1,5 +1,6 @@
 ﻿using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Common.Metadata;
+using MediaRack.Core.Util.Configuration;
 using MediaRack.Core.Util.Hash;
 using MediaRack.Core.Util.Net;
 using MySql.Data.MySqlClient;
@@ -27,6 +28,9 @@ namespace MediaRack.Core.Data.Remote
 
         private void InitConnection()
         {
+            var settings = new List<string>();
+            settings.Add(string.Format("server={0}", ConfigKeys.KEY_RDATA_SERVER.GetConfigValue<string>("")));
+
             //connection = new MySqlConnection("server=03d2348e-6414-46d2-a888-a7330079aa08.mysql.sequelizer.com;database=db03d2348e641446d2a888a7330079aa08;uid=svicvogivbqevucl;pwd=nR4iiYjHomeEgzsDiz4PZ4bUQh4TiqTwdMpPMT23QTXMCSmyThby4zKrQiAa5yy7");
             connection = new MySqlConnection("server=localhost;database=db03d2348e641446d2a888a7330079aa08;uid=root;pwd=root");
         }

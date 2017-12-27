@@ -24,6 +24,7 @@ namespace MediaRack.Core.Util.Configuration
         //Remote storage info
         public const string KEY_RDATA_SERVER = "RDATA_SERVER";
         public const string KEY_RDATA_PORT = "RDATA_USER";
+        public const string KEY_RDATA_DBNAME = "RDATA_DBNAME";
         public const string KEY_RDATA_USER = "RDATA_USER";
         public const string KEY_RDATA_PASS = "RDATA_PASS";
     }
