@@ -28,11 +28,22 @@ namespace MediaRack.Core.Data.Remote
 
         private void InitConnection()
         {
+            //Collect settings
             var settings = new List<string>();
-            settings.Add(string.Format("server={0}", ConfigKeys.KEY_RDATA_SERVER.GetConfigValue<string>("")));
+            settings.Add(string.Format("server={0}", ConfigKeys.KEY_RDATA_SERVER.GetConfigValue<string>("localhost")));
+            settings.Add(string.Format("database={0}", ConfigKeys.KEY_RDATA_DBNAME.GetConfigValue<string>("MediaRackData")));
+            string  port =  ConfigKeys.KEY_RDATA_PORT.GetConfigValue<string>(null);
+            if (!string.IsNullOrWhiteSpace(port)) settings.Add(string.Format("port={0}", port));
+            settings.Add(string.Format("uid={0}", ConfigKeys.KEY_RDATA_USER.GetConfigValue<string>("MediaRack")));
+            settings.Add(string.Format("pwd={0}", ConfigKeys.KEY_RDATA_USER.GetConfigValue<string>("MYPASS")));
+            settings.Add("old guids=true");
+
+            //Build connection string
+            var con_str = string.Join(";", settings.ToArray());
 
             //connection = new MySqlConnection("server=03d2348e-6414-46d2-a888-a7330079aa08.mysql.sequelizer.com;database=db03d2348e641446d2a888a7330079aa08;uid=svicvogivbqevucl;pwd=nR4iiYjHomeEgzsDiz4PZ4bUQh4TiqTwdMpPMT23QTXMCSmyThby4zKrQiAa5yy7");
-            connection = new MySqlConnection("server=localhost;database=db03d2348e641446d2a888a7330079aa08;uid=root;pwd=root");
+            //connection = new MySqlConnection("server=localhost;database=db03d2348e641446d2a888a7330079aa08;uid=root;pwd=root");
+            connection = new MySqlConnection(con_str);
         }
 
 

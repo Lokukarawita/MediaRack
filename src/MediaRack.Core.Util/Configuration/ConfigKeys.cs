@@ -27,5 +27,8 @@ namespace MediaRack.Core.Util.Configuration
         public const string KEY_RDATA_DBNAME = "RDATA_DBNAME";
         public const string KEY_RDATA_USER = "RDATA_USER";
         public const string KEY_RDATA_PASS = "RDATA_PASS";
+        
+        //Connection
+        public const string KEY_CONN_CHKINTERVAL = "CONN_CHKINTERVAL";
     }
 }

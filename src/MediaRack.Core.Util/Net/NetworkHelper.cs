@@ -16,5 +16,14 @@ namespace MediaRack.Core.Util.Net
         {
             return NetworkHelper.InternetCheckConnection("http://www.google.com", 1, 0);
         }
+
+        public static bool Ping(string remoteHost)
+        {
+            using (var p = new System.Net.NetworkInformation.Ping())
+            {
+                var res = p.Send(remoteHost);
+                return res.Status == System.Net.NetworkInformation.IPStatus.Success;
+            }
+        }
     }
 }

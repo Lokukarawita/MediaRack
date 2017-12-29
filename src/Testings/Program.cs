@@ -12,6 +12,7 @@ using MediaRack.Core.Data.Remote;
 using MediaRack.Core.Util.Strings;
 using System.Text.RegularExpressions;
 using MediaRack.Core.Api.TMDDb;
+using System.Net;
 
 namespace Testings
 {
@@ -53,6 +54,10 @@ namespace Testings
 
         static void Main(string[] args)
         {
+
+          var xo =  Dns.GetHostEntry("tracker.tictoctrack.com");
+
+
 
            var x  = TmdbClient.Tmdb.GetMovieTrailers(100);
 

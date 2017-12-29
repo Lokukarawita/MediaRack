@@ -97,6 +97,7 @@
     <Compile Include="Ops\FileProcessingException.cs" />
     <Compile Include="Ops\FileProcessorService.cs" />
     <Compile Include="Ops\LocalDataStore.cs" />
+    <Compile Include="Ops\SynchronizerActivityChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ops\DirectoryWatch.cs" />
   </ItemGroup>
