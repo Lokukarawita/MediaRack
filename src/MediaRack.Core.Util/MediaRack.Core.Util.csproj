@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\CollectionExtentions.cs" />
     <Compile Include="Configuration\ConfigData.cs" />
     <Compile Include="Configuration\ConfigExtentions.cs" />
     <Compile Include="Configuration\ConfigKeys.cs" />

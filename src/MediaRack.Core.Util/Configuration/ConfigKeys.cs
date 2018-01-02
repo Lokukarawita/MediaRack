@@ -22,6 +22,7 @@ namespace MediaRack.Core.Util.Configuration
         public const string KEY_SYNCZ_INTERVAL = "SYNCZ_INTERVAL";
 
         //Remote storage info
+        public const string KEY_RDATA_TYPE = "KEY_RDATA_TYPE";
         public const string KEY_RDATA_SERVER = "RDATA_SERVER";
         public const string KEY_RDATA_PORT = "RDATA_USER";
         public const string KEY_RDATA_DBNAME = "RDATA_DBNAME";

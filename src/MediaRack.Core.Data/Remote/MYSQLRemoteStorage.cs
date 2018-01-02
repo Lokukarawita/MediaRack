@@ -3,6 +3,7 @@ using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Util.Configuration;
 using MediaRack.Core.Util.Hash;
 using MediaRack.Core.Util.Net;
+using MediaRack.Core.Util.Collections;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MediaRack.Core.Data.Remote
         private MediaRackUser currentUser;
         private bool isauthorized;
         private MySqlConnection connection;
+        private string remote_server;
 
         public MYSQLRemoteStorage()
         { InitConnection(); }
@@ -30,12 +32,13 @@ namespace MediaRack.Core.Data.Remote
         {
             //Collect settings
             var settings = new List<string>();
-            settings.Add(string.Format("server={0}", ConfigKeys.KEY_RDATA_SERVER.GetConfigValue<string>("localhost")));
-            settings.Add(string.Format("database={0}", ConfigKeys.KEY_RDATA_DBNAME.GetConfigValue<string>("MediaRackData")));
-            string  port =  ConfigKeys.KEY_RDATA_PORT.GetConfigValue<string>(null);
+            remote_server = Config.GetValue(ConfigKeys.KEY_RDATA_SERVER, "localhost");
+            settings.Add(string.Format("server={0}", remote_server));
+            settings.Add(string.Format("database={0}", Config.GetValue(ConfigKeys.KEY_RDATA_DBNAME, "MediaRackData")));
+            string port = Config.GetValue(ConfigKeys.KEY_RDATA_PORT, null);
             if (!string.IsNullOrWhiteSpace(port)) settings.Add(string.Format("port={0}", port));
-            settings.Add(string.Format("uid={0}", ConfigKeys.KEY_RDATA_USER.GetConfigValue<string>("MediaRack")));
-            settings.Add(string.Format("pwd={0}", ConfigKeys.KEY_RDATA_USER.GetConfigValue<string>("MYPASS")));
+            settings.Add(string.Format("uid={0}", Config.GetValue(ConfigKeys.KEY_RDATA_USER, "MediaRack")));
+            settings.Add(string.Format("pwd={0}", Config.GetValue(ConfigKeys.KEY_RDATA_USER, "MYPASS")));
             settings.Add("old guids=true");
 
             //Build connection string
@@ -201,7 +204,7 @@ namespace MediaRack.Core.Data.Remote
 
         public override bool CheckConnection()
         {
-            var intconn = NetworkHelper.HasInternetConnection();
+            var intconn = NetworkHelper.Ping(remote_server);
             if (intconn)
             {
                 if (connection != null && connection.State != System.Data.ConnectionState.Closed && connection.State != System.Data.ConnectionState.Broken)

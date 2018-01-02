@@ -16,11 +16,13 @@ namespace MediaRack.Core.Data.Remote
         public RemoteStorage()
         {
             currentMap = TypeMap.ReadMap(this.GetType());
+            Config = new Dictionary<string, string>();
         }
 
         public RemoteStorage(TypeMap map)
         {
             currentMap = map;
+            Config = new Dictionary<string, string>();
         }
 
 
@@ -40,7 +42,7 @@ namespace MediaRack.Core.Data.Remote
 
         public abstract bool UpdateUserSettings(Common.Metadata.UserSettingsMetaInfo settings);
 
-        public abstract void UpdateRemote(List<Common.ISynchronizable> localData);
+        public abstract RemoteSyncResult UpdateRemote(List<Common.ISynchronizable> localData);
 
         public abstract List<ISynchronizable> GetRemote(Type synchronizable);
 
@@ -53,13 +55,8 @@ namespace MediaRack.Core.Data.Remote
 
         public abstract bool IsAuthorized { get; }
 
-        public abstract bool IsConnected { get;}
+        public abstract bool IsConnected { get; }
 
-
-
-        RemoteSyncResult IRemoteStorage.UpdateRemote(List<ISynchronizable> localData)
-        {
-            throw new NotImplementedException();
-        }
+        public Dictionary<string, string> Config { get; set; }
     }
 }

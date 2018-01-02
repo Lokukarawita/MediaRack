@@ -16,19 +16,21 @@ namespace MediaRack.Core.Ops
     {
         private Timer changeCheckTimer;
 
-        private string remote_server;
         private long rsync_interval;
         private bool connection_check_started;
         private long connection_check_interval;
+        private IRemoteStorage rstorage;
 
         public event EventHandler<SynchronizerActivityChangedEventArgs> SyncActivityChanged;
         public event EventHandler SyncDirectionChanged;
 
-        public DataSynchronizer()
+        public DataSynchronizer(IRemoteStorage remotestorage)
         {
+            //Remote storage
+            rstorage = remotestorage;
+
             //Settings
             rsync_interval = ConfigKeys.KEY_SYNCZ_INTERVAL.GetConfigValue<long>(120);
-            remote_server = ConfigKeys.KEY_RDATA_SERVER.GetConfigValue<string>("localhost");
             connection_check_interval = ConfigKeys.KEY_CONN_CHKINTERVAL.GetConfigValue<long>(60);
 
             //Current activity
@@ -82,7 +84,7 @@ namespace MediaRack.Core.Ops
 
         private bool IsConnected()
         {
-            return NetworkHelper.Ping(remote_server);
+            return rstorage.IsConnected;
         }
 
         private bool BeginCheckConnectivity()
@@ -90,6 +92,7 @@ namespace MediaRack.Core.Ops
             var remoteok = IsConnected();
             if (remoteok)
             {
+                rstorage.Connect();
                 ChangeActivity(CurrentStatus = SyncActivity.Idle);
                 connection_check_started = false;
                 StartTimer(rsync_interval);
@@ -138,7 +141,7 @@ namespace MediaRack.Core.Ops
 
         private void SyncDownProcess()
         {
-            MYSQLRemoteStorage rstorage = new MYSQLRemoteStorage();
+            
             //rstorage.Connect();
             //rstorage.GetRemote()
         }
