@@ -55,7 +55,7 @@
     <Compile Include="Configuration\ConfigKeys.cs" />
     <Compile Include="Globalization\LanguageCode.cs" />
     <Compile Include="Enums\EnumExtentions.cs" />
-    <Compile Include="Hash\HashUtil.cs" />
+    <Compile Include="Security\HashUtil.cs" />
     <Compile Include="IO\FileSystem.cs" />
     <Compile Include="Net\NetworkHelper.cs" />
     <Compile Include="Security\Crypto.cs" />

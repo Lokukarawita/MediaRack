@@ -1,6 +1,6 @@
 ﻿using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Local.DAO;
-using MediaRack.Core.Util.Hash;
+using MediaRack.Core.Util.Security;
 using MediaRack.Core.Util.Configuration;
 using System;
 using System.Collections.Concurrent;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace MediaRack.Core.Util.Hash
+namespace MediaRack.Core.Util.Security
 {
     public static class HashUtil
     {

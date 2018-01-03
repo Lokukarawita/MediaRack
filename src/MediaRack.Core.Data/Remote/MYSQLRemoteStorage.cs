@@ -1,7 +1,7 @@
 ﻿using MediaRack.Core.Data.Common;
 using MediaRack.Core.Data.Common.Metadata;
 using MediaRack.Core.Util.Configuration;
-using MediaRack.Core.Util.Hash;
+using MediaRack.Core.Util.Security;
 using MediaRack.Core.Util.Net;
 using MediaRack.Core.Util.Collections;
 using MySql.Data.MySqlClient;
@@ -286,7 +286,7 @@ namespace MediaRack.Core.Data.Remote
             get { return CheckConnection(); }
         }
 
-        public override void UpdateRemote(List<ISynchronizable> localData)
+        public override RemoteSyncResult UpdateRemote(List<ISynchronizable> localData)
         {
             throw new NotImplementedException();
         }
