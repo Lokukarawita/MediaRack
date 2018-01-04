@@ -9,6 +9,7 @@ using MediaRack.Core.Util.Configuration;
 using MediaRack.Core.Data.Remote;
 using MediaRack.Core.Data.Local;
 using MediaRack.Core.Data.Common;
+using MediaRack.Core.Data.Common.Metadata;
 
 namespace MediaRack.Core.Ops
 {
@@ -87,6 +88,18 @@ namespace MediaRack.Core.Ops
             return rstorage.IsConnected;
         }
 
+        private SyncMetaInfo GetSyncMetaInfo()
+        {
+            var c_user = UserManagement.GetCurrentUser();
+            if (c_user.Settings.SyncInfo != null)
+            {
+               var rtv = c_user.Settings.SyncInfo.FirstOrDefault(x => x.PCName == Environment.MachineName);
+               return rtv != null ? rtv : new SyncMetaInfo();
+            }
+
+            return new SyncMetaInfo();
+        }
+
         private bool BeginCheckConnectivity()
         {
             var remoteok = IsConnected();
@@ -141,7 +154,7 @@ namespace MediaRack.Core.Ops
 
         private void SyncDownProcess()
         {
-            
+           // rstorage.GetRemote()
             //rstorage.Connect();
             //rstorage.GetRemote()
         }

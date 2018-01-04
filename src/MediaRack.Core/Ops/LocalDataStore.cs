@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediaRack.Core.Data.Local.DAO;
 using MediaRack.Core.Data.Common;
+using MediaRack.Core.Data.Common.Metadata;
 
 namespace MediaRack.Core.Ops
 {
@@ -30,6 +31,7 @@ namespace MediaRack.Core.Ops
                 return dao.Add(entry);
             }
         }
+        
         public MediaEntry UpdateMediaEntry(MediaEntry entry)
         {
             var dao = new MediaEntryDAO();
@@ -38,5 +40,19 @@ namespace MediaRack.Core.Ops
                 return dao.Update(entry);
             }
         }
+
+        public void UpdateSyncInfo(SyncMetaInfo syncinf)
+        {
+            var current_userInfo = UserManagement.GetCurrentUser();
+            var idx = current_userInfo.Settings.SyncInfo.FindIndex(x => x.PCName == Environment.MachineName);
+            if (idx > -1)
+                current_userInfo.Settings.SyncInfo[idx] = syncinf;
+            else
+                current_userInfo.Settings.SyncInfo.Add(syncinf);
+
+            var dao = new UserInfoDAO();
+            dao.Update(current_userInfo);
+        }
+
     }
 }

@@ -13,6 +13,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         public UserSettingsMetaInfo()
         {
             WatchDir = new List<WatchDirMetaInfo>();
+            SyncInfo = new List<SyncMetaInfo>();
             ConflictProtocol = ConflictResolution.KeepRemote;
         }
 
@@ -21,5 +22,8 @@ namespace MediaRack.Core.Data.Common.Metadata
 
         [JsonProperty("conflictProtocol")]
         public ConflictResolution ConflictProtocol { get; set; }
+
+        [JsonProperty("syncInfo")]
+        public List<SyncMetaInfo> SyncInfo { get; set; }
     }
 }

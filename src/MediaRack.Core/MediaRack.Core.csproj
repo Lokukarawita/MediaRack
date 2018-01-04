@@ -89,7 +89,6 @@
     <Compile Include="Api\Mapping\TmdbGenreResolver.cs" />
     <Compile Include="Api\Mapping\TmdbReleaseDateResolver.cs" />
     <Compile Include="Api\TMDb\TmdbClient.cs" />
-    <Compile Include="Auth\UserManager.cs" />
     <Compile Include="Net\ImageDownloader.cs" />
     <Compile Include="Ops\DataSynchronizer.cs" />
     <Compile Include="Ops\EnumSyncActivity.cs" />
@@ -98,6 +97,7 @@
     <Compile Include="Ops\FileProcessorService.cs" />
     <Compile Include="Ops\LocalDataStore.cs" />
     <Compile Include="Ops\SynchronizerActivityChanged.cs" />
+    <Compile Include="Ops\UserManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ops\DirectoryWatch.cs" />
   </ItemGroup>

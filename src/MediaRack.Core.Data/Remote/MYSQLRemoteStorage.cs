@@ -50,6 +50,20 @@ namespace MediaRack.Core.Data.Remote
         }
 
 
+        private MySqlCommand GetRackQuery(Type synchronizable)
+        {
+            var mappedTo = currentMap.GetValue(synchronizable, null);
+            mappedTo = mappedTo.Contains("{mrid}") ? mappedTo.Replace("{mrid}", currentUser.MediaRackUserID.ToString()) : mappedTo;
+            return new MySqlCommand("SELECT * FROM " + mappedTo);
+        }
+        private MySqlCommand GetRackQuery(Type synchronizable, DateTime since)
+        {
+            var select = GetRackQuery(synchronizable);
+            select.CommandText = select.CommandText + " WHERE Timestamp > @ts";
+            select.Parameters.AddWithValue("@ts", since);
+            return select;
+        }
+
 
         public override bool CheckAvailability(string username)
         {
@@ -261,7 +275,28 @@ namespace MediaRack.Core.Data.Remote
 
         public override List<ISynchronizable> GetRemote(DateTime lastSyc, Type synchronizable)
         {
-            throw new NotImplementedException();
+            if (IsConnected)
+            {
+                if (IsAuthorized)
+                {
+                    var cmd = GetRackQuery(synchronizable, lastSyc);
+                    using (cmd)
+                    {
+                        using (var da = new MySqlDataAdapter(cmd))
+                        {
+                            var dt = new DataTable();
+                            da.Fill(dt);
+
+                            foreach (var row in dt.Rows)
+                            {
+                                /*var entry = new Data.Common.MediaEntry(){
+                                     MediaRackID = row[""]
+                                }*/
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override ISynchronizable GetRemote(int mediaRackId, Type synchronizable)
@@ -274,7 +309,10 @@ namespace MediaRack.Core.Data.Remote
             throw new NotImplementedException();
         }
 
-
+        public override RemoteSyncResult UpdateRemote(List<ISynchronizable> localData)
+        {
+            throw new NotImplementedException();
+        }
 
         public override bool IsAuthorized
         {
@@ -286,9 +324,6 @@ namespace MediaRack.Core.Data.Remote
             get { return CheckConnection(); }
         }
 
-        public override RemoteSyncResult UpdateRemote(List<ISynchronizable> localData)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

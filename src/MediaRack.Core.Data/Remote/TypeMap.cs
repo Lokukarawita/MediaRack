@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace MediaRack.Core.Data.Remote
 {
-    public sealed class TypeMap : Dictionary<Type, object>
+    public sealed class TypeMap : Dictionary<Type, string>
     {
         public static TypeMap ReadMap(Type remoteStorageType)
         {
@@ -33,7 +33,7 @@ namespace MediaRack.Core.Data.Remote
                     XDocument doc = XDocument.Load(stringr);
                     var mapings = doc.Descendants("mappings")
                         .Descendants()
-                        .Select(e => new { k = Type.GetType(e.Attribute("type").Value), t = (object)e.Attribute("mapTo").Value })
+                        .Select(e => new { k = Type.GetType(e.Attribute("type").Value), t = e.Attribute("mapTo").Value })
                         .ToDictionary(k => k.k, v => v.t);
 
                     TypeMap map = new TypeMap(mapings);
@@ -45,7 +45,7 @@ namespace MediaRack.Core.Data.Remote
         public TypeMap()
         { }
         
-        public TypeMap(Dictionary<Type, object> map)
+        public TypeMap(Dictionary<Type, string> map)
             : base(map)
         { }
     }

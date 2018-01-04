@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mappings>
-  <map type="MediaRack.Core.Data.Common.MediaEntry, MediaRack.Core.Data" mapTo="MR_RACK" />
+  <map type="MediaRack.Core.Data.Common.MediaEntry, MediaRack.Core.Data" mapTo="MR_RACK{mrid}" />
 </mappings>

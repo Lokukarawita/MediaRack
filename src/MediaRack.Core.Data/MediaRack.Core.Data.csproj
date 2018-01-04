@@ -103,6 +103,7 @@
     <Compile Include="Common\Metadata\FileTrackMetaInfo.cs" />
     <Compile Include="Common\Metadata\PersonMetaInfo.cs" />
     <Compile Include="Common\Metadata\SubtitleMetaInfo.cs" />
+    <Compile Include="Common\Metadata\SyncMetaInfo.cs" />
     <Compile Include="Common\Metadata\TrailerMetaInfo.cs" />
     <Compile Include="Local\DAO\BaseDAO.cs" />
     <Compile Include="Local\DAO\FileQueueDAO.cs" />
