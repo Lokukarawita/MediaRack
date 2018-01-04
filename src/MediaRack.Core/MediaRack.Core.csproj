@@ -90,6 +90,7 @@
     <Compile Include="Api\Mapping\TmdbReleaseDateResolver.cs" />
     <Compile Include="Api\TMDb\TmdbClient.cs" />
     <Compile Include="Net\ImageDownloader.cs" />
+    <Compile Include="Ops\DataSynchronizationConflictException.cs" />
     <Compile Include="Ops\DataSynchronizer.cs" />
     <Compile Include="Ops\EnumSyncActivity.cs" />
     <Compile Include="Ops\EnumSyncDirection.cs" />

@@ -64,6 +64,41 @@ namespace MediaRack.Core.Data.Remote
             return select;
         }
 
+        private List<ISynchronizable> MapTo(Type synchronizable, DataTable dt)
+        {
+            if (synchronizable == typeof(MediaEntry))
+            {
+                var rtv = new List<ISynchronizable>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    var row = dt.Rows[i];
+                    var entry = new Data.Common.MediaEntry()
+                    {
+                        MediaRackID = (int)row["id"],
+                        Bookmark = (string)row["Bookmark"],
+                        Classification = (MediaClassification)Enum.Parse(typeof(MediaClassification), (string)row["Classification"]),
+                        Comment = (string)row["Comment"],
+                        CompositionInfo = CompositionMetaInfo.FromJson<CompositionMetaInfo>(row["CompositionInfo"].ToString()),
+                        Favorite = (bool)row["Favorite"],
+                        FileInfo = FileCollectionMetaInfo.FromJson<FileCollectionMetaInfo>(row["FileInfo"].ToString()),
+                        Grade = (string)row["Grade"],
+                        IDInfo = IDMetaInfo.FromJson<IDMetaInfo>(row["IDInfo"].ToString()),
+                        ImageCacheID = (string)row["ImageCacheID"],
+                        LocalStatus = LocalSyncStatus.SYNCED,
+                        Timestamp = (DateTime)row["Timestamp"],
+                        Watched = (bool)row["Watched"],
+                        WatchedOn = (DateTime)row["WatchedOn"]
+                    };
+                    rtv.Add(entry);
+                }
+
+                return rtv;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public override bool CheckAvailability(string username)
         {
@@ -286,16 +321,18 @@ namespace MediaRack.Core.Data.Remote
                         {
                             var dt = new DataTable();
                             da.Fill(dt);
-
-                            foreach (var row in dt.Rows)
-                            {
-                                /*var entry = new Data.Common.MediaEntry(){
-                                     MediaRackID = row[""]
-                                }*/
-                            }
+                            return MapTo(synchronizable, dt);
                         }
                     }
                 }
+                else
+                {
+                    throw new RemoteStorageAuthenticationException("Authorization required");
+                }
+            }
+            else
+            {
+                throw new RemoteStorageException("Remote storage cannot be accessed at this moment");
             }
         }
 

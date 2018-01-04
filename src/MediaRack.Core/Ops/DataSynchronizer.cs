@@ -93,8 +93,8 @@ namespace MediaRack.Core.Ops
             var c_user = UserManagement.GetCurrentUser();
             if (c_user.Settings.SyncInfo != null)
             {
-               var rtv = c_user.Settings.SyncInfo.FirstOrDefault(x => x.PCName == Environment.MachineName);
-               return rtv != null ? rtv : new SyncMetaInfo();
+                var rtv = c_user.Settings.SyncInfo.FirstOrDefault(x => x.PCName == Environment.MachineName);
+                return rtv != null ? rtv : new SyncMetaInfo();
             }
 
             return new SyncMetaInfo();
@@ -154,7 +154,20 @@ namespace MediaRack.Core.Ops
 
         private void SyncDownProcess()
         {
-           // rstorage.GetRemote()
+            var conflictProtocol = UserManagement.GetCurrentUser().Settings.ConflictProtocol;
+            var syncInfo = GetSyncMetaInfo();
+
+            var remotedata = rstorage.GetRemote(syncInfo.LastDownSync, typeof(MediaEntry)).Cast<MediaEntry>().ToList();
+            foreach (var mediaEntry in remotedata)
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                }
+            }
             //rstorage.Connect();
             //rstorage.GetRemote()
         }
