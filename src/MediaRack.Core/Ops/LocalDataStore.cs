@@ -22,6 +22,18 @@ namespace MediaRack.Core.Ops
                 return item;
             }
         }
+        public MediaEntry GetByMediaRackId(int id)
+        {
+            var dao = new MediaEntryDAO();
+
+            using (var session = dao.GetSession())
+            {
+                var qry = dao.GetQuery(session);
+                var item = qry.FirstOrDefault(x => x.MediaRackID == id);
+                return item;
+            }
+        }
+
 
         public MediaEntry AddMediaEntry(MediaEntry entry)
         {

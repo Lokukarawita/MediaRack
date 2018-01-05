@@ -21,6 +21,7 @@ namespace MediaRack.Core.Data.Common.Metadata
         public List<WatchDirMetaInfo> WatchDir { get; set; }
 
         [JsonProperty("conflictProtocol")]
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public ConflictResolution ConflictProtocol { get; set; }
 
         [JsonProperty("syncInfo")]

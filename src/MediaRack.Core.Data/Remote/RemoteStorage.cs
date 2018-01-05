@@ -52,6 +52,7 @@ namespace MediaRack.Core.Data.Remote
 
         public abstract bool HasRemoteChanges(DateTime lastUpdatedTimestamp);
 
+        public abstract MediaRackUser GetCurrentUser();
 
         public abstract bool IsAuthorized { get; }
 

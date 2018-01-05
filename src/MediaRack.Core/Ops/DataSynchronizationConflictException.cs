@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaRack.Core.Data.Remote;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace MediaRack.Core.Ops
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
 
-        public MediaRack.Core.Data.Remote.ConflictResolution CurrentResolution { get; set; }
+        public ConflictResolution CurrentResolution { get; set; }
+        public int LocalMediaEntryID { get; set; }
+        public int MediaRackID { get; set; }
     }
 }

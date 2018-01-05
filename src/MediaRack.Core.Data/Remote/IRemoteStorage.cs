@@ -43,6 +43,7 @@ namespace MediaRack.Core.Data.Remote
 
         bool HasRemoteChanges(DateTime lastUpdatedTimestamp);
 
+        MediaRackUser GetCurrentUser();
 
         //Properties
 

@@ -56,6 +56,7 @@ namespace MediaRack.Core.Data.Remote
             mappedTo = mappedTo.Contains("{mrid}") ? mappedTo.Replace("{mrid}", currentUser.MediaRackUserID.ToString()) : mappedTo;
             return new MySqlCommand("SELECT * FROM " + mappedTo);
         }
+        
         private MySqlCommand GetRackQuery(Type synchronizable, DateTime since)
         {
             var select = GetRackQuery(synchronizable);
@@ -99,6 +100,8 @@ namespace MediaRack.Core.Data.Remote
                 return null;
             }
         }
+
+
 
         public override bool CheckAvailability(string username)
         {
@@ -265,7 +268,44 @@ namespace MediaRack.Core.Data.Remote
             return false;
         }
 
-
+        public override MediaRackUser GetCurrentUser()
+        {
+            if (IsConnected)
+            {
+                if (IsAuthorized)
+                {
+                    using (var qry = new MySqlCommand("SELECT * FROM users WHERE id=@1", connection))
+                    {
+                        using (var da = new MySqlDataAdapter(qry))
+                        {
+                            var data = new DataTable();
+                            da.Fill(data);
+                            if (data.Rows.Count > 0)
+                            {
+                                currentUser.Username = data.Rows[0]["Username"].ToString();
+                                currentUser.MediaRackUserID = (int)data.Rows[0]["Id"];
+                                currentUser.LastSeen = DateTime.SpecifyKind((DateTime)data.Rows[0]["LastSeen"], DateTimeKind.Utc);
+                                currentUser.Settings = UserSettingsMetaInfo.FromJson<UserSettingsMetaInfo>(data.Rows[0]["Settings"].ToString());
+                                currentUser.Password = "<BLOCKED>";
+                                return currentUser;
+                            }
+                            else
+                            {
+                                return currentUser;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new RemoteStorageAuthenticationException("Authorization required"); 
+                }
+            }
+            else
+            {
+                throw new RemoteStorageException("Remote storage cannot be accessed at this moment");
+            }
+        }
 
         public override bool UpdateUserSettings(UserSettingsMetaInfo settings)
         {
@@ -300,8 +340,6 @@ namespace MediaRack.Core.Data.Remote
                 throw new RemoteStorageException("Not connected");
             }
         }
-
-
 
         public override List<ISynchronizable> GetRemote(Type synchronizable)
         {
@@ -362,5 +400,7 @@ namespace MediaRack.Core.Data.Remote
         }
 
 
+
+        
     }
 }

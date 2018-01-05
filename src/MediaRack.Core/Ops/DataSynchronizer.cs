@@ -156,18 +156,46 @@ namespace MediaRack.Core.Ops
         {
             var conflictProtocol = UserManagement.GetCurrentUser().Settings.ConflictProtocol;
             var syncInfo = GetSyncMetaInfo();
+            var localData = new LocalDataStore();
 
+            //Get remote media entry data
             var remotedata = rstorage.GetRemote(syncInfo.LastDownSync, typeof(MediaEntry)).Cast<MediaEntry>().ToList();
+
             foreach (var mediaEntry in remotedata)
             {
                 try
                 {
-
+                    var localEntry = localData.GetByMediaRackId(mediaEntry.MediaRackID);
+                    if (localEntry == null)
+                    {
+                        localData.AddMediaEntry(mediaEntry);
+                    }
+                    else if (localEntry.Timestamp > mediaEntry.Timestamp && conflictProtocol == ConflictResolution.KeepRemote)
+                    {
+                        localData.UpdateMediaEntry(mediaEntry);
+                    }
+                    else if (localEntry.Timestamp > mediaEntry.Timestamp && conflictProtocol == ConflictResolution.IgonreAndContinue)
+                    {
+                        continue;
+                    }
+                    else if (localEntry.Timestamp > mediaEntry.Timestamp && conflictProtocol == ConflictResolution.Throw)
+                    {
+                        throw new DataSynchronizationConflictException("Sync conflict on media entry " + mediaEntry.MediaRackID)
+                        {
+                            CurrentResolution = conflictProtocol,
+                            LocalMediaEntryID = localEntry.LocalRackID,
+                            MediaRackID = mediaEntry.MediaRackID,
+                        };
+                    }
                 }
-                catch (Exception ex)
-                {
-                }
+                catch (DataSynchronizationConflictException) { throw; }
+                catch (Exception) { continue; }
             }
+
+            //Get remote user entry data
+//            ;//// var remoteuserdata = rstorage.GetCurrentUser();
+
+
             //rstorage.Connect();
             //rstorage.GetRemote()
         }
